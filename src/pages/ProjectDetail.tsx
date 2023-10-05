@@ -45,7 +45,7 @@ const ProjectDetail = () => {
 
   //Get data about the selected project from API
   useEffect(() => {
-    fetch(`${apiUrl}/api/v1/projects/${id}`)
+    fetch(`${apiUrl}/api/v1/projects/${id}/u`)
       .then((response) => response.json())
       .then((data) => setProject(data))
       .catch((error) => console.error("Error fetching project data: ", error));
