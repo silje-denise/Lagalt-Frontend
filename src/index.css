@@ -1,0 +1,32 @@
+body{
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Helvetica;
+    background-color: #180a25;
+    color: #e7daf5;
+}
+
+/*
+    Colors:
+        pink: #D94862
+        purple: #6A2EA6
+        turquise: #32D9C8
+        orange: #F2B84B
+        deep orange: #F28D52
+*/
+
+
+/*
+    Colors used in this project: 
+        Purple
+        - Dark background: #180a25
+        - Lighter background for boxes: #28113e
+
+        - Medium dark for hover on elements: #28113e 
+        - Medium light color for active/selected elements: #481f70
+
+        - Light color for buttons: #7834bb
+        - Lighter color for hover on buttons: #975dd2
+
+        - Light text color: #e7daf5
+*/
