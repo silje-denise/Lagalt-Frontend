@@ -10,12 +10,14 @@ const Description = styled.div`
   color: #d7c1ee;
   margin-bottom: 10px;
   line-height: 1.3;
+  max-width: 75ch;
 `;
 const StyledProjectListItem = styled.div`
   padding: 25px;
   border-radius: 20px;
   background-color: #28113e;
-  
+  display: flex;
+  flex-direction: column;
 `;
 const Image = styled.img`
   width: 40px;
@@ -27,7 +29,6 @@ const Collaborator = styled.div`
   align-items: center;
   gap: 10px;
   width: 110px;
-  
 `;
 
 const Collaborators = styled.div`
@@ -35,7 +36,7 @@ const Collaborators = styled.div`
   align-items: center;
   gap: 15px;
 
-  @media (max-width: 480px){
+  @media (max-width: 480px) {
     flex-direction: column;
   }
 `;
@@ -44,8 +45,8 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
-  
-  @media (max-width: 1025px){
+
+  @media (max-width: 1025px) {
     flex-direction: column;
     gap: 40px;
   }
@@ -64,11 +65,11 @@ const Button = styled(Link)`
 `;
 
 const Details = styled.ul`
-    margin: 30px 0;
+  margin: 30px 0;
 `;
 
 const CollaborationHeader = styled.div`
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 `;
 
 const DetailedProject = ({
@@ -79,14 +80,12 @@ const DetailedProject = ({
   id,
   githubUrl,
 }) => {
-
   return (
     <StyledProjectListItem>
       <Title>{title}</Title>
       <Description>{fullDescription}</Description>
       <Details>
-       <li>aner ikke</li>
-       <li>hva skal stå her</li>
+        <li>Progress med farger (grønn, gul, rød)</li>
       </Details>
 
       <CollaborationHeader>Collaborators:</CollaborationHeader>
@@ -102,12 +101,10 @@ const DetailedProject = ({
           </Collaborator>
           <Collaborator>
             <Image src={image} alt={`Picture of ${owner}`} />
-            {owner}
+            {owner} - owner
           </Collaborator>
         </Collaborators>
-        <Button to={githubUrl}>
-          Go to Github
-        </Button>
+        <Button to={githubUrl}>Go to Github</Button>
       </Wrapper>
     </StyledProjectListItem>
   );
