@@ -10,7 +10,7 @@ const StyledProjectList = styled.div`
   flex-direction: column;
   gap: 20px;
 
-  @media (max-width: 480px){
+  @media (max-width: 480px) {
     width: 75%;
   }
 `;
@@ -24,12 +24,11 @@ const ProjectList = (projects) => {
             <ProjectListItem
               title={p.title}
               shortDescription={p.shortDescription}
-              
               id={p.id}
             />
           );
         }
-        return <></>
+        return <></>;
       })}
     </StyledProjectList>
   );

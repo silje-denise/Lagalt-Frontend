@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import styled from "styled-components";
 import DetailedProject from "../components/projects/DetailedProject.tsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -28,6 +27,7 @@ const Button = styled.button`
   justify-content: center;
   align-items: center;
   margin: 30px 0;
+  cursor: pointer;
 
   &:hover {
     background-color: #975dd2;
@@ -40,6 +40,7 @@ const Button = styled.button`
 const ProjectDetail = () => {
   const { id } = useParams();
   const [project, setProject] = useState(null);
+  const navigate = useNavigate();
 
   const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -54,10 +55,8 @@ const ProjectDetail = () => {
   return (
     <>
       <Wrapper>
-        <Button>
-          <Link to="/">
-            <FontAwesomeIcon icon={faChevronLeft} />
-          </Link>
+        <Button onClick={() => navigate("/")}>
+          <FontAwesomeIcon icon={faChevronLeft} />
         </Button>
         <Project>
           {project ? (
@@ -73,7 +72,7 @@ const ProjectDetail = () => {
             <div>Loading project details...</div>
           )}
         </Project>
-        </Wrapper>
+      </Wrapper>
     </>
   );
 };
