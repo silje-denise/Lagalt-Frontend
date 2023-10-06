@@ -59,7 +59,7 @@ const HomePage = () => {
     fetch(`${apiUrl}/api/v1/projects`)
       .then((response) => response.json())
       .then((data) => setProjects(data))
-      .catch((error) => console.error("Error fetching categories", error));
+      .catch((error) => console.error("Error fetching projects", error));
   }, [apiUrl]);
 
   const [selectedMenuItem, setSelectedMenuItem] = useState(0);

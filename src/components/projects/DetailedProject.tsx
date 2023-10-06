@@ -18,6 +18,7 @@ const StyledProjectListItem = styled.div`
   background-color: #28113e;
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 const Image = styled.img`
   width: 40px;
@@ -75,6 +76,11 @@ const CollaborationHeader = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: row;
+  min-width: 650px;
+
+  @media (max-width: 480px) {
+   min-width: 70px; 
+  }
 `;
 
 const DetailedProject = ({

@@ -1,8 +1,9 @@
 import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import ProjectDialog from "./ProjectDialog.tsx";
 
 const Title = styled.div`
   font-weight: bold;
@@ -20,6 +21,8 @@ const StyledProjectListItem = styled.div`
   background-color: #28113e;
   display: flex;
   flex-direction: column;
+  width: 100%;
+
 `;
 const Image = styled.img`
   width: 40px;
@@ -46,7 +49,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-direction: row;
+  flex-direction: column;
 
   @media (max-width: 1025px) {
     flex-direction: column;
@@ -60,6 +63,8 @@ const Button = styled(Link)`
   padding: 10px 20px;
   color: white;
   height: fit-content;
+  width: fit-content;
+  margin-top: 20px;
 
   &:hover {
     background-color: #975dd2;
@@ -77,7 +82,14 @@ const CollaborationHeader = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: row;
+  min-width: 650px;
+  justify-content: space-between;
+  background-color: #28113e;
+  border-radius: 20px;
 
+  @media (max-width: 480px) {
+   min-width: 70px; 
+  }
 `;
 
 const EditProject = styled.section`
@@ -86,7 +98,9 @@ const EditProject = styled.section`
   display: flex;
   justify-content: space-evenly;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
+  justify-self: flex-end;
+  width: 100px;
 `;
 
 const EditButton = styled.button`
@@ -133,6 +147,18 @@ const EditDetailedProject = ({
   id,
   githubUrl,
 }) => {
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const handleOnclick = () => {
+        if(isOpen){
+            setIsOpen(false);
+        }else{
+            setIsOpen(true);
+        }
+    }
+
+
   return (
     <Container>
       <section>
@@ -159,14 +185,15 @@ const EditDetailedProject = ({
                 {owner} - owner
               </Collaborator>
             </Collaborators>
-            <Button to={githubUrl}>Go to Github</Button>
-          </Wrapper>
+          
+          </Wrapper>  <Button to={githubUrl}>Go to Github</Button>
         </StyledProjectListItem>
       </section>
       <EditProject>
-        <EditButton onClick={() => alert("edit")}>Edit <StyledEditIcon icon={faPenToSquare}/></EditButton>
+        <EditButton onClick={handleOnclick}>Edit <StyledEditIcon icon={faPenToSquare}/></EditButton>
         <DeleteButton onClick={() => alert("Are you sure you want to delete the project?")}>Delete <StyledDeleteIcon icon={faTrashCan}/></DeleteButton>
       </EditProject>
+      <ProjectDialog isOpen={isOpen} title={title} fullDescription={fullDescription} owner={owner}/>
     </Container>
   );
 };
