@@ -72,6 +72,11 @@ const CollaborationHeader = styled.div`
   margin-bottom: 20px;
 `;
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
 const DetailedProject = ({
   title,
   fullDescription,
@@ -81,6 +86,7 @@ const DetailedProject = ({
   githubUrl,
 }) => {
   return (
+    <Container>
     <StyledProjectListItem>
       <Title>{title}</Title>
       <Description>{fullDescription}</Description>
@@ -107,6 +113,7 @@ const DetailedProject = ({
         <Button to={githubUrl}>Go to Github</Button>
       </Wrapper>
     </StyledProjectListItem>
+    </Container>
   );
 };
 

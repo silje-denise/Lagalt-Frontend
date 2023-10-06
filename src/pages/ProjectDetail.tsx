@@ -4,17 +4,19 @@ import styled from "styled-components";
 import DetailedProject from "../components/projects/DetailedProject.tsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import EditDetailedProject from "../components/projects/EditDetailedProject.tsx";
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
-  margin-left: 50px;
-  margin-right: 50px;
-  flex-direction: column;
+  flex-direction: row;
   overflow: hidden;
+  padding: 20px 0;
 `;
 
-const Project = styled.div``;
+const Project = styled.div`
+
+`;
 
 const Button = styled.button`
   all: unset;
@@ -26,7 +28,7 @@ const Button = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 30px 0;
+  margin: 30px;
   cursor: pointer;
 
   &:hover {
@@ -60,6 +62,7 @@ const ProjectDetail = () => {
         </Button>
         <Project>
           {project ? (
+            <>
             <DetailedProject
               title={project.title}
               fullDescription={project.fullDescription}
@@ -68,6 +71,16 @@ const ProjectDetail = () => {
               id={id}
               githubUrl={"https://github.com/"}
             />
+            <br></br>
+            <EditDetailedProject
+              title={project.title}
+              fullDescription={project.fullDescription}
+              owner={"JC Baily"}
+              image={"https://randomuser.me/api/portraits/men/43.jpg"}
+              id={id}
+              githubUrl={"https://github.com/"}
+            />
+            </>
           ) : (
             <div>Loading project details...</div>
           )}
