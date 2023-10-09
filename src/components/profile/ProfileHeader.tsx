@@ -21,6 +21,15 @@ const ProfileInfoWrapper = styled.div`
       }
 `;
 
+const ProfileName = styled.div`
+    text-decoration: none;
+    color: #e7daf5;
+    position: relative;
+    left: 100px;
+    bottom: 45px;
+    font-size: 20px;
+`
+
 const Image = styled.img`
     width: 60px;
     height: auto;
@@ -43,29 +52,32 @@ const UserInfo = () => {
     //     },
     // ];
 
-    const [user, setUser] = useState([]);
-
+    const [username, setUsername] = useState([]);
+  
     const apiUrl = process.env.REACT_APP_API_URL;
-
+  
     useEffect(() => {
-    fetch(`${apiUrl}/api/v1/users`, {
-        method: "GET",
-    })
-        .then(response => response.json())
-        .then(data => setUser(data));
-    }, []);
-
+      fetch(`${apiUrl}/api/v1/Users/1`)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then((data) => {
+            setUsername(data.username);
+            console.log(data.username);
+        })
+        .catch((error) => console.error("Error fetching profile data: ", error));
+    }, [apiUrl]);
     return (
         <ul>
             <ProfileInfoWrapper>
             <Image src="./../../assets/default-profile-picture.png" alt="Default profile picture"/>
-            {user.map((item, index) => {
-                if (item.username && item.id === 1) {
-                    return(
-                        <li key={index}>{item.username}</li>
-                    )
-                }
-            })}
+            <ProfileName>
+            {username}
+            </ProfileName>
+
             </ProfileInfoWrapper>
         </ul>
     );
