@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 
 const SkillsWrapper = styled.div`
     background-color: #28113e;
