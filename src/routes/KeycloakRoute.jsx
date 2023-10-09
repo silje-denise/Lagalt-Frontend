@@ -16,12 +16,12 @@ function KeycloakRoute({ children, role, redirectTo = "/" }) {
     return <Navigate replace to={redirectTo} />;
   }
 
-  if (keycloak.hasRealmRole(role)) {
+  //if (keycloak.hasRealmRole(role)) {
     return <>{children}</>;
-  }
+  //}
 
   //Logged in, but not authorized go to this link
-  return <Navigate replace to={redirectTo} />;
+ //return <Navigate replace to={"/authorized"} />;
 }
 
 export default KeycloakRoute;

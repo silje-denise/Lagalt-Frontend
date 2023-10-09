@@ -21,12 +21,14 @@ export default function App(){
         <Route path="/home" element={<HomePage/>}/>
         <Route path="/login" element={<LoginPage/>}/>
         <Route path="/profile" element={
-            <KeycloakRoute role="default-roles-lagaltusers" redirectTo='/NotAuthorized'>
+            <KeycloakRoute redirectTo='/NotAuthorized'>
               <ProfilePage/>
             </KeycloakRoute>
           }
         />
         <Route path="/projectDetails/:id" element={<ProjectDetail/>}/>
+        <Route path="/users/:username" element={<ProfilePage/>}/>
+        
       </Routes>
     </BrowserRouter>
   );
