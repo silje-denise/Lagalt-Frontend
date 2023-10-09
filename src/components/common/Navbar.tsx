@@ -17,6 +17,11 @@ border-bottom: 1px solid rgba(255,255,255,0.1);
     margin-left: 20px;
     color: #e7daf5;
   }
+  button{
+    all:unset;
+    margin-left: 20px;
+    cursor: pointer;
+  }
 `;
 
 const NavWrapper = styled.div`
@@ -37,9 +42,9 @@ const Image = styled.img`
 `;
 
 const Navbar = () => {
-  let linka = "/notLoggedIn"
+  let link = "/notLoggedIn"
   if (keycloak.tokenParsed){
-    linka = `/users/${keycloak.tokenParsed.preferred_username}`
+    link = `/users/${keycloak.tokenParsed.preferred_username}`
   }
   return (
     <StyledNavbar>
@@ -55,17 +60,14 @@ const Navbar = () => {
           <Link to={"/profile"}>Profile</Link>
         </li>
         <li>
-          <Link to="/login">Login</Link>
-        </li>
-      </NavWrapper>
-      <section className="actions">
         {!keycloak.authenticated && (
           <button onClick={() => keycloak.login()}>Login</button>
         )}
         {keycloak.authenticated && (
           <button onClick={() => keycloak.logout()}>Logout</button>
         )}
-      </section>
+        </li>
+      </NavWrapper>
     </StyledNavbar>
   );
 };
