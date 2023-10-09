@@ -1,3 +1,5 @@
+import { faCircle, faCircleUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -10,12 +12,15 @@ const Description = styled.div`
   color: #d7c1ee;
   margin-bottom: 10px;
   line-height: 1.3;
+  max-width: 75ch;
 `;
 const StyledProjectListItem = styled.div`
   padding: 25px;
   border-radius: 20px;
   background-color: #28113e;
-  
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 `;
 const Image = styled.img`
   width: 40px;
@@ -27,7 +32,6 @@ const Collaborator = styled.div`
   align-items: center;
   gap: 10px;
   width: 110px;
-  
 `;
 
 const Collaborators = styled.div`
@@ -35,7 +39,7 @@ const Collaborators = styled.div`
   align-items: center;
   gap: 15px;
 
-  @media (max-width: 480px){
+  @media (max-width: 480px) {
     flex-direction: column;
   }
 `;
@@ -44,8 +48,8 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
-  
-  @media (max-width: 1025px){
+
+  @media (max-width: 1025px) {
     flex-direction: column;
     gap: 40px;
   }
@@ -64,52 +68,68 @@ const Button = styled(Link)`
 `;
 
 const Details = styled.ul`
-    margin: 30px 0;
+  margin: 30px 0;
 `;
 
 const CollaborationHeader = styled.div`
-    margin-bottom: 20px;
+  margin-bottom: 20px;
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  min-width: 650px;
+
+  @media (max-width: 480px) {
+    min-width: 70px;
+  }
 `;
 
 const DetailedProject = ({
   title,
   fullDescription,
-  owner,
+  creator,
   image,
   id,
   githubUrl,
+  progress,
 }) => {
-
   return (
-    <StyledProjectListItem>
-      <Title>{title}</Title>
-      <Description>{fullDescription}</Description>
-      <Details>
-       <li>aner ikke</li>
-       <li>hva skal stå her</li>
-      </Details>
+    <Container>
+      <StyledProjectListItem>
+        <Title>{title}</Title>
+        <Description>{fullDescription}</Description>
+        <Details>
+          {progress === 0 && (<div><FontAwesomeIcon icon={faCircle} color={"red"} /> Not started</div>)}
+          {progress === 1 && (<div><FontAwesomeIcon icon={faCircle} color={"yellow"} /> In progress</div>)}
+          {progress === 2 && (<div><FontAwesomeIcon icon={faCircle} color={"green"} /> Done</div>)}
+        </Details>
 
-      <CollaborationHeader>Collaborators:</CollaborationHeader>
-      <Wrapper>
-        <Collaborators>
-          <Collaborator>
+        {/* <CollaborationHeader>Collaborators:</CollaborationHeader> */}
+        <Wrapper>
+          <Collaborators>
+            <Collaborator>
+              {image ? (
+                <Image src={image} alt={`Picture of ${creator}`} />
+              ) : (
+                <FontAwesomeIcon icon={faCircleUser} color={"white"} />
+              )}
+
+              {creator}
+            </Collaborator>
+            {/* <Collaborator>
             <Image src={image} alt={`Picture of ${owner}`} />
             {owner}
           </Collaborator>
           <Collaborator>
             <Image src={image} alt={`Picture of ${owner}`} />
-            {owner}
-          </Collaborator>
-          <Collaborator>
-            <Image src={image} alt={`Picture of ${owner}`} />
-            {owner}
-          </Collaborator>
-        </Collaborators>
-        <Button to={githubUrl}>
-          Go to Github
-        </Button>
-      </Wrapper>
-    </StyledProjectListItem>
+            {owner} - owner
+          </Collaborator> */}
+          </Collaborators>
+          <Button to={githubUrl}>Go to Github</Button>
+        </Wrapper>
+      </StyledProjectListItem>
+    </Container>
   );
 };
 
