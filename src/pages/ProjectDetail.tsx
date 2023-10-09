@@ -5,6 +5,7 @@ import DetailedProject from "../components/projects/DetailedProject.tsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import EditDetailedProject from "../components/projects/EditDetailedProject.tsx";
+import keycloak from "../keycloak.js";
 
 const Wrapper = styled.div`
   display: flex;
@@ -59,30 +60,38 @@ const ProjectDetail = () => {
           <FontAwesomeIcon icon={faChevronLeft} />
         </Button>
         <Project>
-          {project ? (
+          {keycloak.authenticated ? (
             <>
-              <DetailedProject
-                title={project.title}
-                fullDescription={project.fullDescription}
-                id={id}
-                githubUrl={project.githubUrl}
-                creator={project.creator.username}
-                image={project.creator.imageUrl}
-                progress={project.progress}
-              />
-              <br></br>
-              <EditDetailedProject
-                title={project.title}
-                fullDescription={project.fullDescription}
-                id={id}
-                githubUrl={project.githubUrl}
-                creator={project.creator.username}
-                image={project.creator.imageUrl}
-                progress={project.progress}
-              />
+              {project ? (
+                <EditDetailedProject
+                  title={project.title}
+                  fullDescription={project.fullDescription}
+                  id={id}
+                  githubUrl={project.githubUrl}
+                  creator={project.creator.username}
+                  image={project.creator.imageUrl}
+                  progress={project.progress}
+                />
+              ) : (
+                <div>Loading project details...</div>
+              )}
             </>
           ) : (
-            <div>Loading project details...</div>
+            <>
+              {project ? (
+                <DetailedProject
+                  title={project.title}
+                  fullDescription={project.fullDescription}
+                  id={id}
+                  githubUrl={project.githubUrl}
+                  creator={project.creator.username}
+                  image={project.creator.imageUrl}
+                  progress={project.progress}
+                />
+              ) : (
+                <div>Loading project details...</div>
+              )}
+            </>
           )}
         </Project>
       </Wrapper>
