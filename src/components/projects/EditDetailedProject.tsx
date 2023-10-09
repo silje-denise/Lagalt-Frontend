@@ -33,7 +33,7 @@ const Collaborator = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-  width: 110px;
+  
 `;
 
 const Collaborators = styled.div`
@@ -51,6 +51,7 @@ const Wrapper = styled.div`
   margin-right: 50px;
   align-items: center;
   flex-direction: row;
+  width: 90%;
 
   @media (max-width: 1025px) {
     flex-direction: column;
