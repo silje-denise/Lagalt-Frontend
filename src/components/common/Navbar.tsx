@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import keycloak from "../../keycloak";
 
 const StyledNavbar = styled.nav`
 border-bottom: 1px solid rgba(255,255,255,0.1);
@@ -36,6 +37,10 @@ const Image = styled.img`
 `;
 
 const Navbar = () => {
+  let linka = "/notLoggedIn"
+  if (keycloak.tokenParsed){
+    linka = `/users/${keycloak.tokenParsed.preferred_username}`
+  }
   return (
     <StyledNavbar>
       <Logo>
@@ -47,12 +52,20 @@ const Navbar = () => {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/profile">Profile</Link>
+          <Link to={"/profile"}>Profile</Link>
         </li>
         <li>
-          <Link to="/login">Log in</Link>
+          <Link to="/login">Login</Link>
         </li>
       </NavWrapper>
+      <section className="actions">
+        {!keycloak.authenticated && (
+          <button onClick={() => keycloak.login()}>Login</button>
+        )}
+        {keycloak.authenticated && (
+          <button onClick={() => keycloak.logout()}>Logout</button>
+        )}
+      </section>
     </StyledNavbar>
   );
 };
