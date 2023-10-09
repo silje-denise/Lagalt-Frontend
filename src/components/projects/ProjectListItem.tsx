@@ -17,21 +17,11 @@ const StyledProjectListItem = styled.div`
   background-color: #28113e;
   width: 100%;
 `;
-const Image = styled.img`
-  width: 40px;
-  height: 40px;
-  border-radius: 100%;
-`;
-const Owner = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 110px;
-  margin-top: 20px;
-`;
+
+
 const Wrapper = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
 `;
 const Button = styled.button`
@@ -55,10 +45,7 @@ const ProjectListItem = ({ title, shortDescription, id }) => {
       <Title>{title}</Title>
       <Description>{shortDescription}</Description>
       <Wrapper>
-        <Owner>
-          {/* <Image src={image} alt={`Picture of ${owner}`}/>
-                {owner} */}
-        </Owner>
+     
         <Button onClick={() => navigate(`/projectDetails/${id}`)}>
           View project
         </Button>

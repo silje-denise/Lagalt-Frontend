@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ProjectList from "../components/projects/ProjectList.tsx";
 import styled from "styled-components";
+import NoProject from "../components/projects/NoProjects.tsx";
 
 const CategoryMenu = styled.div`
   width: 15%;
@@ -91,7 +92,7 @@ const HomePage = () => {
       {/* Listing out all the projects assosiated with a given category */}
       {projects &&
         projects.map((p) => {
-          index = p.categoryId - 1; //The API doens't have an ID 0, so we need to force the index to start on 1
+          index = p.category.id - 1; //The API doens't have an ID 0, so we need to force the index to start on 1
           if (index === selectedMenuItem) {
             projectsToDisplay.push(p);
             return <></>;
@@ -99,7 +100,7 @@ const HomePage = () => {
           }console.log(projectsToDisplay)
         })}
 
-      {projectsToDisplay.length !== 1 ? <ProjectList projects={projectsToDisplay}/> : <div>no projects</div>}
+      {projectsToDisplay.length !== 1 ? <ProjectList projects={projectsToDisplay}/> : <NoProject/>}
     </Wrapper>
   );
 };

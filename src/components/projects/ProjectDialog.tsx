@@ -81,7 +81,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const ProjectDialog = ({ isOpen, title, fullDescription, owner }) => {
+const ProjectDialog = ({ isOpen, title, fullDescription, creator, githubUrl }) => {
   const x = () => {
     isOpen = false;
   };
@@ -112,12 +112,12 @@ const ProjectDialog = ({ isOpen, title, fullDescription, owner }) => {
               <input type="radio" />
             </InputWrapper> */}
             <InputWrapper>
-              <label>Owner: </label>
-              <input type="text" defaultValue={owner} />
+              <label>Creator: </label>
+              <input type="text" defaultValue={creator} />
             </InputWrapper>
             <InputWrapper>
               <label>Github url: </label>
-              <input type="text" defaultValue={"no link"} />
+              <input type="text" defaultValue={githubUrl} />
             </InputWrapper>
             <br />
             <ButtonContainer>

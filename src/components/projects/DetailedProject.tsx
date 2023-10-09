@@ -1,3 +1,5 @@
+import { faCircle, faCircleUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -79,46 +81,54 @@ const Container = styled.div`
   min-width: 650px;
 
   @media (max-width: 480px) {
-   min-width: 70px; 
+    min-width: 70px;
   }
 `;
 
 const DetailedProject = ({
   title,
   fullDescription,
-  owner,
+  creator,
   image,
   id,
   githubUrl,
+  progress,
 }) => {
   return (
     <Container>
-    <StyledProjectListItem>
-      <Title>{title}</Title>
-      <Description>{fullDescription}</Description>
-      <Details>
-        <li>Progress med farger (grønn, gul, rød)</li>
-      </Details>
+      <StyledProjectListItem>
+        <Title>{title}</Title>
+        <Description>{fullDescription}</Description>
+        <Details>
+          {progress === 0 && (<div><FontAwesomeIcon icon={faCircle} color={"red"} /> Not started</div>)}
+          {progress === 1 && (<div><FontAwesomeIcon icon={faCircle} color={"yellow"} /> In progress</div>)}
+          {progress === 2 && (<div><FontAwesomeIcon icon={faCircle} color={"green"} /> Done</div>)}
+        </Details>
 
-      <CollaborationHeader>Collaborators:</CollaborationHeader>
-      <Wrapper>
-        <Collaborators>
-          <Collaborator>
-            <Image src={image} alt={`Picture of ${owner}`} />
-            {owner}
-          </Collaborator>
-          <Collaborator>
+        {/* <CollaborationHeader>Collaborators:</CollaborationHeader> */}
+        <Wrapper>
+          <Collaborators>
+            <Collaborator>
+              {image ? (
+                <Image src={image} alt={`Picture of ${creator}`} />
+              ) : (
+                <FontAwesomeIcon icon={faCircleUser} color={"white"} />
+              )}
+
+              {creator}
+            </Collaborator>
+            {/* <Collaborator>
             <Image src={image} alt={`Picture of ${owner}`} />
             {owner}
           </Collaborator>
           <Collaborator>
             <Image src={image} alt={`Picture of ${owner}`} />
             {owner} - owner
-          </Collaborator>
-        </Collaborators>
-        <Button to={githubUrl}>Go to Github</Button>
-      </Wrapper>
-    </StyledProjectListItem>
+          </Collaborator> */}
+          </Collaborators>
+          <Button to={githubUrl}>Go to Github</Button>
+        </Wrapper>
+      </StyledProjectListItem>
     </Container>
   );
 };

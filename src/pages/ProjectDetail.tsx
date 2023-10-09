@@ -14,9 +14,7 @@ const Wrapper = styled.div`
   padding: 20px 0;
 `;
 
-const Project = styled.div`
-
-`;
+const Project = styled.div``;
 
 const Button = styled.button`
   all: unset;
@@ -48,7 +46,7 @@ const ProjectDetail = () => {
 
   //Get data about the selected project from API
   useEffect(() => {
-    fetch(`${apiUrl}/api/v1/projects/${id}/u`)
+    fetch(`${apiUrl}/api/v1/projects/${id}/a`)
       .then((response) => response.json())
       .then((data) => setProject(data))
       .catch((error) => console.error("Error fetching project data: ", error));
@@ -63,23 +61,25 @@ const ProjectDetail = () => {
         <Project>
           {project ? (
             <>
-            <DetailedProject
-              title={project.title}
-              fullDescription={project.fullDescription}
-              owner={"JC Baily"}
-              image={"https://randomuser.me/api/portraits/men/43.jpg"}
-              id={id}
-              githubUrl={"https://github.com/"}
-            />
-            <br></br>
-            <EditDetailedProject
-              title={project.title}
-              fullDescription={project.fullDescription}
-              owner={"JC Baily"}
-              image={"https://randomuser.me/api/portraits/men/43.jpg"}
-              id={id}
-              githubUrl={"https://github.com/"}
-            />
+              <DetailedProject
+                title={project.title}
+                fullDescription={project.fullDescription}
+                id={id}
+                githubUrl={project.githubUrl}
+                creator={project.creator.username}
+                image={project.creator.imageUrl}
+                progress={project.progress}
+              />
+              <br></br>
+              <EditDetailedProject
+                title={project.title}
+                fullDescription={project.fullDescription}
+                id={id}
+                githubUrl={project.githubUrl}
+                creator={project.creator.username}
+                image={project.creator.imageUrl}
+                progress={project.progress}
+              />
             </>
           ) : (
             <div>Loading project details...</div>

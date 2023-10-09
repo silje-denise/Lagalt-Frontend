@@ -1,4 +1,4 @@
-import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faCircle, faCircleUser, faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
@@ -48,8 +48,9 @@ const Collaborators = styled.div`
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-right: 50px;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
 
   @media (max-width: 1025px) {
     flex-direction: column;
@@ -64,7 +65,7 @@ const Button = styled(Link)`
   color: white;
   height: fit-content;
   width: fit-content;
-  margin-top: 20px;
+  
 
   &:hover {
     background-color: #975dd2;
@@ -140,12 +141,13 @@ const StyledEditIcon = styled(FontAwesomeIcon)`
 `;
 
 const EditDetailedProject = ({
-  title,
-  fullDescription,
-  owner,
-  image,
-  id,
-  githubUrl,
+    title,
+    fullDescription,
+    creator,
+    image,
+    id,
+    githubUrl,
+    progress,
 }) => {
 
     const [isOpen, setIsOpen] = useState(false);
@@ -166,34 +168,33 @@ const EditDetailedProject = ({
           <Title>{title}</Title>
           <Description>{fullDescription}</Description>
           <Details>
-            <li>Progress med farger (grønn, gul, rød)</li>
+          {progress === 0 && (<div><FontAwesomeIcon icon={faCircle} color={"red"} /> Not started</div>)}
+          {progress === 1 && (<div><FontAwesomeIcon icon={faCircle} color={"yellow"} /> In progress</div>)}
+          {progress === 2 && (<div><FontAwesomeIcon icon={faCircle} color={"green"} /> Done</div>)}
           </Details>
 
-          <CollaborationHeader>Collaborators:</CollaborationHeader>
+          {/* <CollaborationHeader>Collaborators:</CollaborationHeader> */}
           <Wrapper>
             <Collaborators>
               <Collaborator>
-                <Image src={image} alt={`Picture of ${owner}`} />
-                {owner}
-              </Collaborator>
-              <Collaborator>
-                <Image src={image} alt={`Picture of ${owner}`} />
-                {owner}
-              </Collaborator>
-              <Collaborator>
-                <Image src={image} alt={`Picture of ${owner}`} />
-                {owner} - owner
+              {image ? (
+                <Image src={image} alt={`Picture of ${creator}`} />
+              ) : (
+                <FontAwesomeIcon icon={faCircleUser} color={"white"} />
+              )}
+
+              {creator}
               </Collaborator>
             </Collaborators>
-          
-          </Wrapper>  <Button to={githubUrl}>Go to Github</Button>
+            <Button to={githubUrl}>Go to Github</Button>
+          </Wrapper> 
         </StyledProjectListItem>
       </section>
       <EditProject>
         <EditButton onClick={handleOnclick}>Edit <StyledEditIcon icon={faPenToSquare}/></EditButton>
         <DeleteButton onClick={() => alert("Are you sure you want to delete the project?")}>Delete <StyledDeleteIcon icon={faTrashCan}/></DeleteButton>
       </EditProject>
-      <ProjectDialog isOpen={isOpen} title={title} fullDescription={fullDescription} owner={owner}/>
+      <ProjectDialog isOpen={isOpen} title={title} fullDescription={fullDescription} creator={creator} githubUrl={githubUrl}/>
     </Container>
   );
 };
