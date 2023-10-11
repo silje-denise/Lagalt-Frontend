@@ -28,16 +28,18 @@ const TestPage = () => {
         },
         {
             username: "Joakim",
-            imageUrl: "testtt"
+            imageUrl: "https://randomuser.me/api/portraits/men/1.jpg"
         }
-    ]
+    ];
+
+    let skills = ["Frontend", "Backend", "C#"];
   return (
     <Main>
       <EditProject title={"EditProject component"} fullDescription={"Testing the description"} creator={creators[0].username} image={creators[0].imageUrl} id={1} githubUrl={undefined} progress={0} collaborators={creators} />
       <br/>
       <DetailedProject title={"DetailedProject component"} fullDescription={"Testing the description"} creator={creators[1].username} image={creators[1].imageUrl} id={2} githubUrl={undefined} progress={1} collaborators={creators} />
       <br/>
-      <PrivateDetailedProject title={"PrivateDetailedProject component"} fullDescription={"Testing the description"} creator={creators[2].username} image={creators[2].imageUrl} id={3} githubUrl={undefined} progress={2} collaborators={creators} />
+      <PrivateDetailedProject title={"PrivateDetailedProject component"} fullDescription={"Testing the description"} creator={creators[2].username} image={creators[2].imageUrl} id={3} githubUrl={undefined} progress={2} collaborators={creators} neededSkills={skills} />
     </Main>
   );
 };

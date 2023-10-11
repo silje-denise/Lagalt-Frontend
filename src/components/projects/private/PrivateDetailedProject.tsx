@@ -16,7 +16,7 @@ const Description = styled.div`
   max-width: 75ch;
 `;
 const StyledProjectListItem = styled.div`
-  padding: 25px;
+  overflow: hidden;
   border-radius: 20px;
   background-color: #28113e;
   display: flex;
@@ -65,6 +65,7 @@ const Button = styled(Link)`
   padding: 10px 20px;
   color: white;
   height: fit-content;
+  cursor: pointer;
 
   &:hover {
     background-color: #975dd2;
@@ -89,6 +90,28 @@ const Container = styled.div`
   }
 `;
 
+const Skills = styled.div`
+  background-color: #481f70;
+  gap: 5px;
+  padding: 25px;
+  display: flex;
+`;
+
+const Skill = styled.div`
+  background-color: #7834bb;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-transform: capitalize;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: default;
+`;
+
+const TopSection = styled.section`
+  padding: 25px 25px 0 25px;
+`;
+
 const PrivateDetailedProject = ({
   title,
   fullDescription,
@@ -98,71 +121,80 @@ const PrivateDetailedProject = ({
   githubUrl,
   progress,
   collaborators,
+  neededSkills,
 }) => {
   return (
     <Container>
       <StyledProjectListItem>
-        <Title>{title}</Title>
-        <Description>{fullDescription}</Description>
-        <Details>
-          {progress === 0 && (
-            <div>
-              <FontAwesomeIcon icon={faCircle} color={"red"} /> Not started
-            </div>
-          )}
-          {progress === 1 && (
-            <div>
-              <FontAwesomeIcon icon={faCircle} color={"yellow"} /> In progress
-            </div>
-          )}
-          {progress === 2 && (
-            <div>
-              <FontAwesomeIcon icon={faCircle} color={"green"} /> Done
-            </div>
-          )}
-        </Details>
+        <TopSection>
+          <Title>{title}</Title>
+          <Description>{fullDescription}</Description>
+          <Details>
+            {progress === 0 && (
+              <div>
+                <FontAwesomeIcon icon={faCircle} color={"red"} /> Not started
+              </div>
+            )}
+            {progress === 1 && (
+              <div>
+                <FontAwesomeIcon icon={faCircle} color={"yellow"} /> In progress
+              </div>
+            )}
+            {progress === 2 && (
+              <div>
+                <FontAwesomeIcon icon={faCircle} color={"green"} /> Done
+              </div>
+            )}
+          </Details>
 
-        {/* <CollaborationHeader>Collaborators:</CollaborationHeader> */}
-        <Wrapper>
-          <Collaborators>
-            <Collaborator>
-              {image ? (
-                <Image
-                  src={image}
-                  alt={`Picture of ${creator}`}
-                  onError={(e) =>
-                    (e.currentTarget.src =
-                      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png")
-                  }
-                />
-              ) : (
-                <FontAwesomeIcon icon={faCircleUser} color={"white"} />
-              )}
-              {creator}⭐
-            </Collaborator>
+          {/* <CollaborationHeader>Collaborators:</CollaborationHeader> */}
+          <Wrapper>
+            <Collaborators>
+              <Collaborator>
+                {image ? (
+                  <Image
+                    src={image}
+                    alt={`Picture of ${creator}`}
+                    onError={(e) =>
+                      (e.currentTarget.src =
+                        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png")
+                    }
+                  />
+                ) : (
+                  <FontAwesomeIcon icon={faCircleUser} color={"white"} />
+                )}
+                {creator}⭐
+              </Collaborator>
 
-            {collaborators &&
-              collaborators.map((collaborator) => {
-                return (
-                  <Collaborator>
-                    <Image
-                      src={collaborator.imageUrl}
-                      alt={`Picture of ${collaborator.username}`}
-                      onError={(e) => {
-                        e.currentTarget.src =
-                          "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png";
-                      }}
-                    />
-                    {collaborator.username}name
-                  </Collaborator>
-                );
-              })}
-          </Collaborators>
-{/* 
-          {keycloak.authenticated && (
+              {collaborators &&
+                collaborators.map((collaborator) => {
+                  return (
+                    <Collaborator>
+                      <Image
+                        src={collaborator.imageUrl}
+                        alt={`Picture of ${collaborator.username}`}
+                        onError={(e) => {
+                          e.currentTarget.src =
+                            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png";
+                        }}
+                      />
+                    </Collaborator>
+                  );
+                })}
+            </Collaborators>
+
             <Button to={githubUrl}>Go to Github</Button>
-          )} */}
-        </Wrapper>
+          </Wrapper>
+        </TopSection>
+        <br />
+        <section>
+          <Skills>
+            {neededSkills &&
+              neededSkills.map((skill) => {
+                return <Skill>{skill}</Skill>;
+              })}
+          </Skills>
+        </section>
       </StyledProjectListItem>
     </Container>
   );

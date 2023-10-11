@@ -158,7 +158,10 @@ const DetailedProject = ({
                 );
               })}
           </Collaborators>
-          <Button to={githubUrl}>Go to Github</Button>
+
+          {/* {keycloak.authenticated && (
+            <Button to={githubUrl}>Go to Github</Button>
+          )} */}
         </Wrapper>
       </StyledProjectListItem>
     </Container>
