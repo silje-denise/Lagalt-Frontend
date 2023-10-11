@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import keycloak from "../../keycloak";
 
 const Title = styled.div`
   font-weight: bold;
@@ -26,18 +27,21 @@ const Image = styled.img`
   width: 40px;
   height: 40px;
   border-radius: 100%;
+  border: 1px solid #7834bb;
 `;
 const Collaborator = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
   width: 110px;
+  
 `;
 
 const Collaborators = styled.div`
   display: flex;
   align-items: center;
   gap: 15px;
+  
 
   @media (max-width: 480px) {
     flex-direction: column;
@@ -100,9 +104,21 @@ const DetailedProject = ({
         <Title>{title}</Title>
         <Description>{fullDescription}</Description>
         <Details>
-          {progress === 0 && (<div><FontAwesomeIcon icon={faCircle} color={"red"} /> Not started</div>)}
-          {progress === 1 && (<div><FontAwesomeIcon icon={faCircle} color={"yellow"} /> In progress</div>)}
-          {progress === 2 && (<div><FontAwesomeIcon icon={faCircle} color={"green"} /> Done</div>)}
+          {progress === 0 && (
+            <div>
+              <FontAwesomeIcon icon={faCircle} color={"red"} /> Not started
+            </div>
+          )}
+          {progress === 1 && (
+            <div>
+              <FontAwesomeIcon icon={faCircle} color={"yellow"} /> In progress
+            </div>
+          )}
+          {progress === 2 && (
+            <div>
+              <FontAwesomeIcon icon={faCircle} color={"green"} /> Done
+            </div>
+          )}
         </Details>
 
         {/* <CollaborationHeader>Collaborators:</CollaborationHeader> */}
@@ -110,7 +126,7 @@ const DetailedProject = ({
           <Collaborators>
             <Collaborator>
               {image ? (
-                <Image src={image} alt={`Picture of ${creator}`} />
+                <Image src={image} alt={`Picture of ${creator}`} onError={e => e.currentTarget.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png"}/>
               ) : (
                 <FontAwesomeIcon icon={faCircleUser} color={"white"} />
               )}
@@ -126,7 +142,9 @@ const DetailedProject = ({
             {owner} - owner
           </Collaborator> */}
           </Collaborators>
-          <Button to={githubUrl}>Go to Github</Button>
+          {keycloak.authenticated && (
+            <Button to={githubUrl}>Go to Github</Button>
+          )}
         </Wrapper>
       </StyledProjectListItem>
     </Container>
