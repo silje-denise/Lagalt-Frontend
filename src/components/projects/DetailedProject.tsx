@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import keycloak from "../../keycloak";
 
 const Title = styled.div`
   font-weight: bold;
@@ -100,9 +101,21 @@ const DetailedProject = ({
         <Title>{title}</Title>
         <Description>{fullDescription}</Description>
         <Details>
-          {progress === 0 && (<div><FontAwesomeIcon icon={faCircle} color={"red"} /> Not started</div>)}
-          {progress === 1 && (<div><FontAwesomeIcon icon={faCircle} color={"yellow"} /> In progress</div>)}
-          {progress === 2 && (<div><FontAwesomeIcon icon={faCircle} color={"green"} /> Done</div>)}
+          {progress === 0 && (
+            <div>
+              <FontAwesomeIcon icon={faCircle} color={"red"} /> Not started
+            </div>
+          )}
+          {progress === 1 && (
+            <div>
+              <FontAwesomeIcon icon={faCircle} color={"yellow"} /> In progress
+            </div>
+          )}
+          {progress === 2 && (
+            <div>
+              <FontAwesomeIcon icon={faCircle} color={"green"} /> Done
+            </div>
+          )}
         </Details>
 
         {/* <CollaborationHeader>Collaborators:</CollaborationHeader> */}
@@ -126,7 +139,9 @@ const DetailedProject = ({
             {owner} - owner
           </Collaborator> */}
           </Collaborators>
-          <Button to={githubUrl}>Go to Github</Button>
+          {keycloak.authenticated && (
+            <Button to={githubUrl}>Go to Github</Button>
+          )}
         </Wrapper>
       </StyledProjectListItem>
     </Container>

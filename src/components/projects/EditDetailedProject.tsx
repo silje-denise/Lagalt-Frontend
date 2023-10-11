@@ -1,6 +1,11 @@
-import { faCircle, faCircleUser, faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircle,
+  faCircleUser,
+  faPenToSquare,
+  faTrashCan,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import ProjectDialog from "./ProjectDialog.tsx";
@@ -22,18 +27,17 @@ const StyledProjectListItem = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-
 `;
 const Image = styled.img`
   width: 40px;
   height: 40px;
   border-radius: 100%;
+  border: 1px solid #7834bb;
 `;
 const Collaborator = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-  
 `;
 
 const Collaborators = styled.div`
@@ -66,7 +70,6 @@ const Button = styled(Link)`
   color: white;
   height: fit-content;
   width: fit-content;
-  
 
   &:hover {
     background-color: #975dd2;
@@ -90,7 +93,7 @@ const Container = styled.div`
   border-radius: 20px;
 
   @media (max-width: 480px) {
-   min-width: 70px; 
+    min-width: 70px;
   }
 `;
 
@@ -107,7 +110,7 @@ const EditProject = styled.section`
 
 const EditButton = styled.button`
   all: unset;
-  background-color: rgba(49,206,74,0.3);
+  background-color: rgba(49, 206, 74, 0.3);
   height: 50%;
   width: 55px;
   padding: 20px;
@@ -120,7 +123,7 @@ const EditButton = styled.button`
 
 const DeleteButton = styled.button`
   all: unset;
-  background-color: rgba(217,76,76,0.3);
+  background-color: rgba(217, 76, 76, 0.3);
   height: 50%;
   width: 55px;
   padding: 20px;
@@ -133,33 +136,53 @@ const DeleteButton = styled.button`
 
 const StyledDeleteIcon = styled(FontAwesomeIcon)`
   margin-left: 4px;
-  color: rgba(217,76,76,0.8);
+  color: rgba(217, 76, 76, 0.8);
 `;
 
 const StyledEditIcon = styled(FontAwesomeIcon)`
   margin-left: 4px;
-  color: rgba(49,206,74,0.8);
+  color: rgba(49, 206, 74, 0.8);
 `;
 
 const EditDetailedProject = ({
-    title,
-    fullDescription,
-    creator,
-    image,
-    id,
-    githubUrl,
-    progress,
+  title,
+  fullDescription,
+  creator,
+  image,
+  id,
+  githubUrl,
+  progress,
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  //const [isHidden, setIsHidden] = useState(false);
+  const [projects, setProjects] = useState([]);
 
-    const [isOpen, setIsOpen] = useState(false);
-
-    const handleOnclick = () => {
-        if(isOpen){
-            setIsOpen(false);
-        }else{
-            setIsOpen(true);
-        }
+  const handleOnclick = () => {
+    if (isOpen) {
+      setIsOpen(false);
+    } else {
+      setIsOpen(true);
     }
+  };
+
+  const testCall = () => {
+    const apiUrl = process.env.REACT_APP_API_URL;
+
+    fetch(`${apiUrl}/api/v1/projects`)
+      .then((response) => response.json())
+      .then((data) => setProjects(data))
+      .catch((error) => console.error("Error fetching projects", error));
+  };
+
+  const deleteProject = () => {
+    let confirm = window.confirm(
+      "Are you sure you want to delete this project? \n This action cannot be undone!"
+    );
+    if (confirm) {
+      //testCall();
+    }
+  };
+
 
 
   return (
@@ -169,33 +192,62 @@ const EditDetailedProject = ({
           <Title>{title}</Title>
           <Description>{fullDescription}</Description>
           <Details>
-          {progress === 0 && (<div><FontAwesomeIcon icon={faCircle} color={"red"} /> Not started</div>)}
-          {progress === 1 && (<div><FontAwesomeIcon icon={faCircle} color={"yellow"} /> In progress</div>)}
-          {progress === 2 && (<div><FontAwesomeIcon icon={faCircle} color={"green"} /> Done</div>)}
+            {progress === 0 && (
+              <div>
+                <FontAwesomeIcon icon={faCircle} color={"red"} /> Not started
+              </div>
+            )}
+            {progress === 1 && (
+              <div>
+                <FontAwesomeIcon icon={faCircle} color={"yellow"} /> In progress
+              </div>
+            )}
+            {progress === 2 && (
+              <div>
+                <FontAwesomeIcon icon={faCircle} color={"green"} /> Done
+              </div>
+            )}
           </Details>
 
           {/* <CollaborationHeader>Collaborators:</CollaborationHeader> */}
           <Wrapper>
             <Collaborators>
               <Collaborator>
-              {image ? (
-                <Image src={image} alt={`Picture of ${creator}`} />
-              ) : (
-                <FontAwesomeIcon icon={faCircleUser} color={"white"} />
-              )}
+                {image ? (
+                  <Image
+                    src={image}
+                    alt={`Picture of ${creator}`}
+                    onError={(e) => {
+                      e.currentTarget.src =
+                        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png";
+                    }}
+                  />
+                ) : (
+                  <FontAwesomeIcon icon={faCircleUser} color={"white"} />
+                )}
 
-              {creator}
+                {creator}
               </Collaborator>
             </Collaborators>
             <Button to={githubUrl}>Go to Github</Button>
-          </Wrapper> 
+          </Wrapper>
         </StyledProjectListItem>
       </section>
       <EditProject>
-        <EditButton onClick={handleOnclick}>Edit <StyledEditIcon icon={faPenToSquare}/></EditButton>
-        <DeleteButton onClick={() => alert("Are you sure you want to delete the project?")}>Delete <StyledDeleteIcon icon={faTrashCan}/></DeleteButton>
+        <EditButton onClick={handleOnclick}>
+          Edit <StyledEditIcon icon={faPenToSquare} />
+        </EditButton>
+        <DeleteButton onClick={deleteProject}>
+          Delete <StyledDeleteIcon icon={faTrashCan} />
+        </DeleteButton>
       </EditProject>
-      <ProjectDialog isOpen={isOpen} title={title} fullDescription={fullDescription} creator={creator} githubUrl={githubUrl}/>
+      <ProjectDialog
+        isOpen={isOpen}
+        title={title}
+        fullDescription={fullDescription}
+        creator={creator}
+        githubUrl={githubUrl}
+      />
     </Container>
   );
 };

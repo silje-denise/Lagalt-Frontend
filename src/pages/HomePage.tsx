@@ -97,7 +97,7 @@ const HomePage = () => {
             projectsToDisplay.push(p);
             return <></>;
             
-          }console.log(projectsToDisplay)
+          }
         })}
 
       {projectsToDisplay.length !== 1 ? <ProjectList projects={projectsToDisplay}/> : <NoProject/>}
