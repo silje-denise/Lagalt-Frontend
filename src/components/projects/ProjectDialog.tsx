@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form } from "react-router-dom";
 import styled from "styled-components";
 
@@ -64,53 +64,102 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
 
-  button{
-    all:unset;
+  button {
+    all: unset;
     margin-left: 5px;
     padding: 10px 20px;
     border-radius: 100px;
     cursor: pointer;
   }
-  button:last-child{
+  button:last-child {
     background-color: #7834bb;
     color: white;
 
     &:hover {
-        background-color: #975dd2;
-      }
+      background-color: #975dd2;
+    }
   }
 `;
 
-const ProjectDialog = ({ isOpen, title, fullDescription, creator, githubUrl }) => {
+const ProgressButton = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+
+  input {
+    width: 20px;
+    margin: 0;
+    margin-left: 5px;
+  }
+`;
+
+const ProjectDialog = ({
+  isOpen,
+  title,
+  fullDescription,
+  creator,
+  githubUrl,
+}) => {
+
+    
+
+    const [isChecked, setIsChecked] = useState(false);
+    //Form
+    const [newTitle, setNewTitle] = useState();
+
+    const checkProgressButton = () => {
+        console.log(isChecked);
+        if(isChecked){
+            setIsChecked(false);
+        }else{
+            setIsChecked(true);
+        }
+       console.log(isChecked);
+    }
+
   const x = () => {
     isOpen = false;
   };
+
+  //FIX
+  const updateProject = () => {
+    console.log(newTitle);
+  }
+
+//   const changeTitle = (e) => {
+//     setNewTitle(e.target.value);
+//     console.log(newTitle);
+//   }
 
   return (
     <>
       {isOpen && (
         <StyledDialog>
-          <Header>Editing {title}</Header>
+          <Header>Editing "{title}"</Header>
           <StyledForm>
             <InputWrapper>
               <label>Title: </label>
-              <input type="text" defaultValue={title} />
+              <input type="text" defaultValue={title}/>
             </InputWrapper>
             <InputWrapper>
               <label>Description: </label>
               <textarea maxLength={3000} defaultValue={fullDescription} />
             </InputWrapper>
-            {/* <InputWrapper>
+            <InputWrapper>
               <div>Progress: </div>
-              <label>Not started: </label>
-              <input type="radio" />
-              <br/>
-              <label>In progress: </label>
-              <input type="radio" />
-              <br/>
-              <label>Finished: </label>
-              <input type="radio" />
-            </InputWrapper> */}
+              <ProgressButton>
+                <label>Not started: </label>
+                <input type="radio"  checked={isChecked} onChange={() => checkProgressButton }/>
+              </ProgressButton>
+              <ProgressButton>
+                <label>In progress: </label>
+                <input type="radio"  checked={isChecked} onChange={() => checkProgressButton }/>
+              </ProgressButton>
+              <ProgressButton>
+                <label>Finished: </label>
+                <input type="radio"  checked={isChecked} onChange={() => checkProgressButton }/>
+              </ProgressButton>
+            </InputWrapper>
             <InputWrapper>
               <label>Creator: </label>
               <input type="text" defaultValue={creator} />
