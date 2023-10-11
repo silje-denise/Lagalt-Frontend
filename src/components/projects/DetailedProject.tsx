@@ -27,18 +27,21 @@ const Image = styled.img`
   width: 40px;
   height: 40px;
   border-radius: 100%;
+  border: 1px solid #7834bb;
 `;
 const Collaborator = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
   width: 110px;
+  
 `;
 
 const Collaborators = styled.div`
   display: flex;
   align-items: center;
   gap: 15px;
+  
 
   @media (max-width: 480px) {
     flex-direction: column;
@@ -123,7 +126,7 @@ const DetailedProject = ({
           <Collaborators>
             <Collaborator>
               {image ? (
-                <Image src={image} alt={`Picture of ${creator}`} />
+                <Image src={image} alt={`Picture of ${creator}`} onError={e => e.currentTarget.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png"}/>
               ) : (
                 <FontAwesomeIcon icon={faCircleUser} color={"white"} />
               )}

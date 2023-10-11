@@ -67,6 +67,8 @@ const HomePage = () => {
 
   const handleClick = (index) => {
     setSelectedMenuItem(index);
+    console.log("index" + index);
+    console.log("selected index" + selectedMenuItem);
   };
 
   const projectsToDisplay = [{}];
@@ -75,12 +77,18 @@ const HomePage = () => {
   return (
     <Wrapper>
       <CategoryMenu>
+        <MenuItem
+          onClick={() => handleClick(0)}
+          selected={selectedMenuItem === 0}
+        >
+          All projects
+        </MenuItem>
         {categories &&
-          categories.map((c, index) => {
+          categories.map((c) => {
             return (
               <MenuItem
-                onClick={() => handleClick(index)}
-                selected={selectedMenuItem === index}
+                onClick={() => handleClick(c.id)}
+                selected={selectedMenuItem === c.id}
                 key={index}
               >
                 {c.name}
@@ -89,18 +97,26 @@ const HomePage = () => {
           })}
       </CategoryMenu>
 
-      {/* Listing out all the projects assosiated with a given category */}
-      {projects &&
-        projects.map((p) => {
-          index = p.category.id - 1; //The API doens't have an ID 0, so we need to force the index to start on 1
-          if (index === selectedMenuItem) {
-            projectsToDisplay.push(p);
-            return <></>;
-            
-          }
-        })}
-
-      {projectsToDisplay.length !== 1 ? <ProjectList projects={projectsToDisplay}/> : <NoProject/>}
+      {/* If the first option is selected, show all projects */}
+      {projects && selectedMenuItem === 0 ? (
+        <ProjectList projects={projects} />
+      ) : (
+        <>
+          {/* Listing out all the projects assosiated with a given category */}
+          {projects &&
+            projects.map((p) => {
+              if (p.category.id === selectedMenuItem) {
+                projectsToDisplay.push(p);
+                return <></>;
+              }
+            })}
+          {projectsToDisplay.length !== 1 ? (
+            <ProjectList projects={projectsToDisplay} />
+          ) : (
+            <NoProject />
+          )}
+        </>
+      )}
     </Wrapper>
   );
 };
