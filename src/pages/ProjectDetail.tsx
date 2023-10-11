@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import styled from "styled-components";
-import DetailedProject from "../components/projects/DetailedProject.tsx";
+import DetailedProject from "../components/projects/public/DetailedProject.tsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-import EditDetailedProject from "../components/projects/EditDetailedProject.tsx";
+import EditDetailedProject from "../components/projects/admin/EditProject.tsx";
 import keycloak from "../keycloak.js";
 
 const Wrapper = styled.div`
@@ -71,6 +71,7 @@ const ProjectDetail = () => {
                   creator={project.creator.username}
                   image={project.creator.imageUrl}
                   progress={project.progress}
+                  collaborators={project.collaborators}
                 />
               ) : (
                 <div>Loading project details...</div>
@@ -87,6 +88,7 @@ const ProjectDetail = () => {
                   creator={project.creator.username}
                   image={project.creator.imageUrl}
                   progress={project.progress}
+                  collaborators={project.collaborators}
                 />
               ) : (
                 <div>Loading project details...</div>

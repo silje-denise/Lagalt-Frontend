@@ -93,7 +93,7 @@ const ProgressButton = styled.div`
   }
 `;
 
-const ProjectDialog = ({
+const EditProjectForm = ({
   isOpen,
   title,
   fullDescription,
@@ -179,4 +179,4 @@ const ProjectDialog = ({
     </>
   );
 };
-export default ProjectDialog;
+export default EditProjectForm;
