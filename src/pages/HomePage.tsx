@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ProjectList from "../components/projects/ProjectList.tsx";
+import ProjectList from "../components/projects/public/ProjectList.tsx";
 import styled from "styled-components";
 import NoProject from "../components/projects/NoProjects.tsx";
 

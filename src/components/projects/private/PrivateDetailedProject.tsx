@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import keycloak from "../../keycloak";
+import keycloak from "../../../keycloak";
 
 const Title = styled.div`
   font-weight: bold;
@@ -27,21 +27,21 @@ const Image = styled.img`
   width: 40px;
   height: 40px;
   border-radius: 100%;
-  border: 1px solid #7834bb;
+  border: 2px solid #7834bb;
 `;
 const Collaborator = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-  width: 110px;
-  
 `;
 
 const Collaborators = styled.div`
   display: flex;
   align-items: center;
   gap: 15px;
-  
+  max-width: 500px;
+  flex-wrap: wrap;
+  overflow: clip;
 
   @media (max-width: 480px) {
     flex-direction: column;
@@ -89,7 +89,7 @@ const Container = styled.div`
   }
 `;
 
-const DetailedProject = ({
+const PrivateDetailedProject = ({
   title,
   fullDescription,
   creator,
@@ -97,6 +97,7 @@ const DetailedProject = ({
   id,
   githubUrl,
   progress,
+  collaborators,
 }) => {
   return (
     <Container>
@@ -126,29 +127,45 @@ const DetailedProject = ({
           <Collaborators>
             <Collaborator>
               {image ? (
-                <Image src={image} alt={`Picture of ${creator}`} onError={e => e.currentTarget.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png"}/>
+                <Image
+                  src={image}
+                  alt={`Picture of ${creator}`}
+                  onError={(e) =>
+                    (e.currentTarget.src =
+                      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png")
+                  }
+                />
               ) : (
                 <FontAwesomeIcon icon={faCircleUser} color={"white"} />
               )}
-
-              {creator}
+              {creator}⭐
             </Collaborator>
-            {/* <Collaborator>
-            <Image src={image} alt={`Picture of ${owner}`} />
-            {owner}
-          </Collaborator>
-          <Collaborator>
-            <Image src={image} alt={`Picture of ${owner}`} />
-            {owner} - owner
-          </Collaborator> */}
+
+            {collaborators &&
+              collaborators.map((collaborator) => {
+                return (
+                  <Collaborator>
+                    <Image
+                      src={collaborator.imageUrl}
+                      alt={`Picture of ${collaborator.username}`}
+                      onError={(e) => {
+                        e.currentTarget.src =
+                          "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png";
+                      }}
+                    />
+                    {collaborator.username}name
+                  </Collaborator>
+                );
+              })}
           </Collaborators>
+{/* 
           {keycloak.authenticated && (
             <Button to={githubUrl}>Go to Github</Button>
-          )}
+          )} */}
         </Wrapper>
       </StyledProjectListItem>
     </Container>
   );
 };
 
-export default DetailedProject;
+export default PrivateDetailedProject;

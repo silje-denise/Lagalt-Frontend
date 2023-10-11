@@ -1,0 +1,44 @@
+import React from "react";
+import EditProject from "../components/projects/admin/EditProject.tsx";
+import DetailedProject from "../components/projects/public/DetailedProject.tsx";
+import PrivateDetailedProject from "../components/projects/private/PrivateDetailedProject.tsx";
+import styled from "styled-components";
+
+//This file is meant as a page to test components without effecting the other pages
+
+const Main = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 0;
+`;
+
+const TestPage = () => {
+
+    let creators = [
+        {
+            username: "Silje",
+            imageUrl: "testtt"
+        },
+        {
+            username: "Silje D",
+            imageUrl: "testtt"
+        },
+        {
+            username: "Joakim",
+            imageUrl: "testtt"
+        }
+    ]
+  return (
+    <Main>
+      <EditProject title={"EditProject component"} fullDescription={"Testing the description"} creator={creators[0].username} image={creators[0].imageUrl} id={1} githubUrl={undefined} progress={0} collaborators={creators} />
+      <br/>
+      <DetailedProject title={"DetailedProject component"} fullDescription={"Testing the description"} creator={creators[1].username} image={creators[1].imageUrl} id={2} githubUrl={undefined} progress={1} collaborators={creators} />
+      <br/>
+      <PrivateDetailedProject title={"PrivateDetailedProject component"} fullDescription={"Testing the description"} creator={creators[2].username} image={creators[2].imageUrl} id={3} githubUrl={undefined} progress={2} collaborators={creators} />
+    </Main>
+  );
+};
+export default TestPage;
