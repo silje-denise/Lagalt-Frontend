@@ -21,7 +21,7 @@ export default function App(){
         <Route path="/home" element={<HomePage/>}/>
         <Route path="/login" element={<LoginPage/>}/>
         <Route path="/profile" element={
-            <KeycloakRoute redirectTo='/NotAuthorized'>
+            <KeycloakRoute redirectTo='/home'>
             <ProfilePage/>
             </KeycloakRoute>
           }
