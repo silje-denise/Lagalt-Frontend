@@ -5,7 +5,6 @@ import UserInfo from "./../components/profile/ProfileHeader.tsx";
 
 
 const ProfilePage = () => {
-  //const { username } = useParams();
     return(
         <div>
             <UserInfo/>

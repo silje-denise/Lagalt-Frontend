@@ -36,10 +36,6 @@ const Image = styled.img`
   height: auto;
 `;
 
-const logWrapper = styled.button`
-  background-color: yellow;
-`
-
 const Navbar = () => {
   let linka = "/notLoggedIn"
   if (keycloak.tokenParsed){

@@ -22,7 +22,7 @@ export default function App(){
         <Route path="/login" element={<LoginPage/>}/>
         <Route path="/profile" element={
             <KeycloakRoute redirectTo='/NotAuthorized'>
-              <ProfilePage/>
+            <ProfilePage/>
             </KeycloakRoute>
           }
         />
@@ -33,6 +33,8 @@ export default function App(){
     </BrowserRouter>
   );
 }
+
+
 
 //const root = ReactDOM.createRoot(document.getElementById('root'));
 //root.render(<App/>);
