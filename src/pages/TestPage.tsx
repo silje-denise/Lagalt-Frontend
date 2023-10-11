@@ -32,7 +32,7 @@ const TestPage = () => {
         }
     ];
 
-    let skills = ["Frontend", "Backend", "C#"];
+    let skills = ["Frontend", "Backend", "CSharp"];
   return (
     <Main>
       <EditProject title={"EditProject component"} fullDescription={"Testing the description"} creator={creators[0].username} image={creators[0].imageUrl} id={1} githubUrl={undefined} progress={0} collaborators={creators} />

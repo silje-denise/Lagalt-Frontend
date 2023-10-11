@@ -98,7 +98,8 @@ const Skills = styled.div`
 `;
 
 const Skill = styled.div`
-  background-color: #7834bb;
+  background-color: #481f70;
+  color: #a673d8;
   padding: 10px 20px;
   border-radius: 10px;
   text-transform: capitalize;
@@ -106,6 +107,8 @@ const Skill = styled.div`
   justify-content: center;
   align-items: center;
   cursor: default;
+  border: 2px solid #a673d8;
+  font-weight: bolder;
 `;
 
 const TopSection = styled.section`
@@ -191,7 +194,7 @@ const PrivateDetailedProject = ({
           <Skills>
             {neededSkills &&
               neededSkills.map((skill) => {
-                return <Skill>{skill}</Skill>;
+                return <Skill>#{skill}</Skill>;
               })}
           </Skills>
         </section>
