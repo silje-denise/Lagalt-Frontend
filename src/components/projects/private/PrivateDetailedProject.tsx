@@ -135,17 +135,22 @@ const PrivateDetailedProject = ({
           <Details>
             {progress === 0 && (
               <div>
-                <FontAwesomeIcon icon={faCircle} color={"red"} /> Not started
+                <FontAwesomeIcon icon={faCircle} color={"#4991de"} /> Founding
               </div>
             )}
             {progress === 1 && (
               <div>
-                <FontAwesomeIcon icon={faCircle} color={"yellow"} /> In progress
+                <FontAwesomeIcon icon={faCircle} color={"#F2B84B"} /> In progress
               </div>
             )}
             {progress === 2 && (
               <div>
-                <FontAwesomeIcon icon={faCircle} color={"green"} /> Done
+                <FontAwesomeIcon icon={faCircle} color={"#F28D52"} /> Stalled
+              </div>
+            )}
+               {progress === 3 && (
+              <div>
+                <FontAwesomeIcon icon={faCircle} color={"#67d149"} /> Completed
               </div>
             )}
           </Details>

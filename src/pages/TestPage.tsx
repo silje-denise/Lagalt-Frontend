@@ -40,6 +40,8 @@ const TestPage = () => {
       <DetailedProject title={"DetailedProject component"} fullDescription={"Testing the description"} creator={creators[1].username} image={creators[1].imageUrl} id={2} githubUrl={undefined} progress={1} collaborators={creators} />
       <br/>
       <PrivateDetailedProject title={"PrivateDetailedProject component"} fullDescription={"Testing the description"} creator={creators[2].username} image={creators[2].imageUrl} id={3} githubUrl={undefined} progress={2} collaborators={creators} neededSkills={skills} />
+      <br/>
+      <PrivateDetailedProject title={"PrivateDetailedProject component"} fullDescription={"Testing the description"} creator={creators[2].username} image={creators[2].imageUrl} id={3} githubUrl={undefined} progress={3} collaborators={creators} neededSkills={skills} />
     </Main>
   );
 };
