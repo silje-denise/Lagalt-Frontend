@@ -81,11 +81,10 @@ const ApplicationForm = ({isOpen}) => {
     <>
  {isOpen && (
           <StyledDialog>
-            <Header>Header</Header>
+            <Header>Tell us why you want to join our team</Header>
             <StyledForm>
               <InputWrapper>
-                <label>Motivation: </label>
-                <textarea maxLength={3000} placeholder="Start typing..." />
+                <textarea maxLength={3000} placeholder="Start typing..."/>
               </InputWrapper>
             <br/>
               <ButtonContainer>
