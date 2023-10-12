@@ -105,22 +105,27 @@ const DetailedProject = ({
         <Title>{title}</Title>
         <Description>{fullDescription}</Description>
         <Details>
-          {progress === 0 && (
-            <div>
-              <FontAwesomeIcon icon={faCircle} color={"red"} /> Not started
-            </div>
-          )}
-          {progress === 1 && (
-            <div>
-              <FontAwesomeIcon icon={faCircle} color={"yellow"} /> In progress
-            </div>
-          )}
-          {progress === 2 && (
-            <div>
-              <FontAwesomeIcon icon={faCircle} color={"green"} /> Done
-            </div>
-          )}
-        </Details>
+            {progress === 0 && (
+              <div>
+                <FontAwesomeIcon icon={faCircle} color={"#4991de"} /> Founding
+              </div>
+            )}
+            {progress === 1 && (
+              <div>
+                <FontAwesomeIcon icon={faCircle} color={"#F2B84B"} /> In progress
+              </div>
+            )}
+            {progress === 2 && (
+              <div>
+                <FontAwesomeIcon icon={faCircle} color={"#F28D52"} /> Stalled
+              </div>
+            )}
+               {progress === 3 && (
+              <div>
+                <FontAwesomeIcon icon={faCircle} color={"#67d149"} /> Completed
+              </div>
+            )}
+          </Details>
 
         {/* <CollaborationHeader>Collaborators:</CollaborationHeader> */}
         <Wrapper>
