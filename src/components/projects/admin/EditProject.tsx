@@ -247,7 +247,7 @@ const EditProject = ({
                             "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png";
                         }}
                       />
-                      {collaborator.username}name
+                      {collaborator.username}
                     </Collaborator>
                   );
                 })}
