@@ -32,18 +32,20 @@ const ProfileName = styled.div`
     
 `
 
-const ProfileIcon = styled(FontAwesomeIcon)`
-      width: 45px;
-      height: 45px;
-`;
-
 const ProfileInfo = styled.div`
     color: #e7daf5;
     position: relative;
     font-size: 16px;
     top: 30px;
     right: 147px;
-`
+`;
+
+const Image = styled.img`
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+//   border: 2px solid #7834bb;
+`;
 
 const UserInfo = () => {
 
@@ -77,14 +79,24 @@ const UserInfo = () => {
     return (
         <ul>
             <ProfileInfoWrapper>
-            <ProfileIcon icon={faCircleUser} color={"white"} />
+            <Image
+                      src={profilePicture}
+                      alt={`Picture of ${username}`}
+                      onError={(e) =>
+                        (e.currentTarget.src =
+                          "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png")
+                      }
+                    />
+            {/* <img src= {profilePicture} alt="Profile Picture"/> */}
+            {/* <ProfileIcon icon={faCircleUser} color={"white"} /> */}
             <ProfileName>
             {username}
             </ProfileName>
             <ProfileInfo>
             {userInfo}
             </ProfileInfo>
-            {/* {profilePicture} */}
+
+
             </ProfileInfoWrapper>
         </ul>
     );
