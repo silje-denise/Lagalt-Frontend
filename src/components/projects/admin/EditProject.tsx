@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import ProjectDialog from "./ProjectDialog.tsx";
+import EditProjectForm from "./EditProjectForm.tsx";
 
 const Title = styled.div`
   font-weight: bold;
@@ -32,7 +32,7 @@ const Image = styled.img`
   width: 40px;
   height: 40px;
   border-radius: 100%;
-  border: 1px solid #7834bb;
+  border: 2px solid #7834bb;
 `;
 const Collaborator = styled.div`
   display: flex;
@@ -44,6 +44,9 @@ const Collaborators = styled.div`
   display: flex;
   align-items: center;
   gap: 15px;
+  max-width: 500px;
+  flex-wrap: wrap;
+  overflow: clip;
 
   @media (max-width: 480px) {
     flex-direction: column;
@@ -97,7 +100,7 @@ const Container = styled.div`
   }
 `;
 
-const EditProject = styled.section`
+const EditButtons = styled.section`
   background-color: #28113e;
   border-radius: 0 20px 20px 0;
   display: flex;
@@ -144,7 +147,7 @@ const StyledEditIcon = styled(FontAwesomeIcon)`
   color: rgba(49, 206, 74, 0.8);
 `;
 
-const EditDetailedProject = ({
+const EditProject = ({
   title,
   fullDescription,
   creator,
@@ -152,6 +155,7 @@ const EditDetailedProject = ({
   id,
   githubUrl,
   progress,
+  collaborators,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   //const [isHidden, setIsHidden] = useState(false);
@@ -183,8 +187,6 @@ const EditDetailedProject = ({
     }
   };
 
-
-
   return (
     <Container>
       <section>
@@ -194,17 +196,22 @@ const EditDetailedProject = ({
           <Details>
             {progress === 0 && (
               <div>
-                <FontAwesomeIcon icon={faCircle} color={"red"} /> Not started
+                <FontAwesomeIcon icon={faCircle} color={"#4991de"} /> Founding
               </div>
             )}
             {progress === 1 && (
               <div>
-                <FontAwesomeIcon icon={faCircle} color={"yellow"} /> In progress
+                <FontAwesomeIcon icon={faCircle} color={"#F2B84B"} /> In progress
               </div>
             )}
             {progress === 2 && (
               <div>
-                <FontAwesomeIcon icon={faCircle} color={"green"} /> Done
+                <FontAwesomeIcon icon={faCircle} color={"#F28D52"} /> Stalled
+              </div>
+            )}
+               {progress === 3 && (
+              <div>
+                <FontAwesomeIcon icon={faCircle} color={"67d149"} /> Completed
               </div>
             )}
           </Details>
@@ -225,23 +232,39 @@ const EditDetailedProject = ({
                 ) : (
                   <FontAwesomeIcon icon={faCircleUser} color={"white"} />
                 )}
-
-                {creator}
+                {creator}⭐
               </Collaborator>
+
+              {collaborators &&
+                collaborators.map((collaborator) => {
+                  return (
+                    <Collaborator>
+                      <Image
+                        src={collaborator.imageUrl}
+                        alt={`Picture of ${collaborator.username}`}
+                        onError={(e) => {
+                          e.currentTarget.src =
+                            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png";
+                        }}
+                      />
+                      {collaborator.username}
+                    </Collaborator>
+                  );
+                })}
             </Collaborators>
             <Button to={githubUrl}>Go to Github</Button>
           </Wrapper>
         </StyledProjectListItem>
       </section>
-      <EditProject>
+      <EditButtons>
         <EditButton onClick={handleOnclick}>
           Edit <StyledEditIcon icon={faPenToSquare} />
         </EditButton>
         <DeleteButton onClick={deleteProject}>
           Delete <StyledDeleteIcon icon={faTrashCan} />
         </DeleteButton>
-      </EditProject>
-      <ProjectDialog
+      </EditButtons>
+      <EditProjectForm
         isOpen={isOpen}
         title={title}
         fullDescription={fullDescription}
@@ -252,4 +275,4 @@ const EditDetailedProject = ({
   );
 };
 
-export default EditDetailedProject;
+export default EditProject;

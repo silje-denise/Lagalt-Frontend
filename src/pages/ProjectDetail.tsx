@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import styled from "styled-components";
-import DetailedProject from "../components/projects/DetailedProject.tsx";
+import DetailedProject from "../components/projects/public/DetailedProject.tsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-import EditDetailedProject from "../components/projects/EditDetailedProject.tsx";
 import keycloak from "../keycloak.js";
+import PrivateDetailedProject from "../components/projects/private/PrivateDetailedProject.tsx";
 
 const Wrapper = styled.div`
   display: flex;
@@ -60,10 +60,11 @@ const ProjectDetail = () => {
           <FontAwesomeIcon icon={faChevronLeft} />
         </Button>
         <Project>
+          {/*Add logic for when a user can have admin privileges */}
           {keycloak.authenticated ? (
             <>
               {project ? (
-                <EditDetailedProject
+                <PrivateDetailedProject
                   title={project.title}
                   fullDescription={project.fullDescription}
                   id={id}
@@ -71,6 +72,8 @@ const ProjectDetail = () => {
                   creator={project.creator.username}
                   image={project.creator.imageUrl}
                   progress={project.progress}
+                  collaborators={project.collaborators}
+                  neededSkills={project.neededSkills}
                 />
               ) : (
                 <div>Loading project details...</div>
@@ -87,6 +90,7 @@ const ProjectDetail = () => {
                   creator={project.creator.username}
                   image={project.creator.imageUrl}
                   progress={project.progress}
+                  collaborators={project.collaborators}
                 />
               ) : (
                 <div>Loading project details...</div>

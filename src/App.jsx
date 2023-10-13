@@ -10,6 +10,7 @@ import Navbar from './components/common/Navbar.tsx';
 import ProjectDetail from './pages/ProjectDetail.tsx';
 import KeycloakRoute from './routes/KeycloakRoute';
 import Footer from './components/common/Footer.tsx';
+import TestPage from './pages/TestPage.tsx';
 
 
 export default function App(){
@@ -22,18 +23,21 @@ export default function App(){
         <Route path="/home" element={<HomePage/>}/>
         <Route path="/login" element={<LoginPage/>}/>
         <Route path="/profile" element={
-            <KeycloakRoute redirectTo='/NotAuthorized'>
-              <ProfilePage/>
+            <KeycloakRoute redirectTo='/home'>
+            <ProfilePage/>
             </KeycloakRoute>
           }
         />
         <Route path="/projectDetails/:id" element={<ProjectDetail/>}/>
         <Route path="/users/:username" element={<ProfilePage/>}/>
+        <Route path="/test" element={<TestPage/>}/>
       </Routes>
       <Footer/>
     </BrowserRouter>
   );
 }
+
+
 
 //const root = ReactDOM.createRoot(document.getElementById('root'));
 //root.render(<App/>);

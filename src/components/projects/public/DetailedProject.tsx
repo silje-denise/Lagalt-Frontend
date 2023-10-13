@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import keycloak from "../../keycloak";
+import keycloak from "../../../keycloak";
 
 const Title = styled.div`
   font-weight: bold;
@@ -27,21 +27,21 @@ const Image = styled.img`
   width: 40px;
   height: 40px;
   border-radius: 100%;
-  border: 1px solid #7834bb;
+  border: 2px solid #7834bb;
 `;
 const Collaborator = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-  width: 110px;
-  
 `;
 
 const Collaborators = styled.div`
   display: flex;
   align-items: center;
   gap: 15px;
-  
+  max-width: 500px;
+  flex-wrap: wrap;
+  overflow: clip;
 
   @media (max-width: 480px) {
     flex-direction: column;
@@ -97,6 +97,7 @@ const DetailedProject = ({
   id,
   githubUrl,
   progress,
+  collaborators,
 }) => {
   return (
     <Container>
@@ -104,47 +105,68 @@ const DetailedProject = ({
         <Title>{title}</Title>
         <Description>{fullDescription}</Description>
         <Details>
-          {progress === 0 && (
-            <div>
-              <FontAwesomeIcon icon={faCircle} color={"red"} /> Not started
-            </div>
-          )}
-          {progress === 1 && (
-            <div>
-              <FontAwesomeIcon icon={faCircle} color={"yellow"} /> In progress
-            </div>
-          )}
-          {progress === 2 && (
-            <div>
-              <FontAwesomeIcon icon={faCircle} color={"green"} /> Done
-            </div>
-          )}
-        </Details>
+            {progress === 0 && (
+              <div>
+                <FontAwesomeIcon icon={faCircle} color={"#4991de"} /> Founding
+              </div>
+            )}
+            {progress === 1 && (
+              <div>
+                <FontAwesomeIcon icon={faCircle} color={"#F2B84B"} /> In progress
+              </div>
+            )}
+            {progress === 2 && (
+              <div>
+                <FontAwesomeIcon icon={faCircle} color={"#F28D52"} /> Stalled
+              </div>
+            )}
+               {progress === 3 && (
+              <div>
+                <FontAwesomeIcon icon={faCircle} color={"#67d149"} /> Completed
+              </div>
+            )}
+          </Details>
 
         {/* <CollaborationHeader>Collaborators:</CollaborationHeader> */}
         <Wrapper>
           <Collaborators>
             <Collaborator>
               {image ? (
-                <Image src={image} alt={`Picture of ${creator}`} onError={e => e.currentTarget.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png"}/>
+                <Image
+                  src={image}
+                  alt={`Picture of ${creator}`}
+                  onError={(e) =>
+                    (e.currentTarget.src =
+                      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png")
+                  }
+                />
               ) : (
                 <FontAwesomeIcon icon={faCircleUser} color={"white"} />
               )}
-
-              {creator}
+              {creator}⭐
             </Collaborator>
-            {/* <Collaborator>
-            <Image src={image} alt={`Picture of ${owner}`} />
-            {owner}
-          </Collaborator>
-          <Collaborator>
-            <Image src={image} alt={`Picture of ${owner}`} />
-            {owner} - owner
-          </Collaborator> */}
+
+            {collaborators &&
+              collaborators.map((collaborator) => {
+                return (
+                  <Collaborator>
+                    <Image
+                      src={collaborator.imageUrl}
+                      alt={`Picture of ${collaborator.username}`}
+                      onError={(e) =>
+                        (e.currentTarget.src =
+                          "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png")
+                      }
+                    />
+                    {collaborator.username}
+                  </Collaborator>
+                );
+              })}
           </Collaborators>
-          {keycloak.authenticated && (
+
+          {/* {keycloak.authenticated && (
             <Button to={githubUrl}>Go to Github</Button>
-          )}
+          )} */}
         </Wrapper>
       </StyledProjectListItem>
     </Container>
