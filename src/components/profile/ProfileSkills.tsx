@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import React, { useState, useEffect } from 'react';
+import keycloak from "../../keycloak";
 
 const SkillsWrapper = styled.div`
     background-color: #28113e;
@@ -38,11 +39,15 @@ const SkillsWrapper = styled.div`
 const Skills = () => {
 
     const [skills, setSkills] = useState<string[]>([]);
-  
+
     const apiUrl = process.env.REACT_APP_API_URL;
+    let username = ""
+    if(keycloak.tokenParsed){
+        username = `${keycloak.tokenParsed.preferred_username}`
+    }
   
     useEffect(() => {
-      fetch(`${apiUrl}/api/v1/Users/1`)
+      fetch(`${apiUrl}/api/v1/Users/${username}`)
         .then((response) => {
             if (!response.ok) {
                 throw new Error("Network response was not ok");
