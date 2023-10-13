@@ -1,9 +1,12 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Skills from './../components/profile/ProfileSkills.tsx';
 import UserInfo from "./../components/profile/ProfileHeader.tsx";
 import Projects from "./../components/profile/ProfileProjects.tsx";
 import AdminToggle from "./../components/profile/AdminToggle.tsx";
 import styled from "styled-components";
+import keycloak from "./../keycloak";
+import ProjectListItem from "../components/projects/public/ProjectListItem.tsx";
+
 
 // styled AdminHeader = styled
 
@@ -13,9 +16,9 @@ const ProfilePage = () => {
         <div>
             <UserInfo/>
             <Skills/>
-            <Projects/>
-            <h3>Admin:</h3>
             <AdminToggle/>
+            <Projects/>
+            
         </div>
     );
 };

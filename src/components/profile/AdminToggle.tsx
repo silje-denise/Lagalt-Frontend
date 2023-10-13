@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const SwitchWrapper = styled.label`
-  position: relative;
-  display: inline-block;
+  position: absolute;
+  top: 150px;
+  right: 50px;
   width: 60px;
   height: 30px;
   margin-left: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 `;
 
 const Checkbox = styled.input.attrs({ type: 'checkbox' })`
@@ -44,11 +48,18 @@ const Slider = styled.span`
   }
 `;
 
+const AdminHeader = styled.p`
+  padding-bottom: 60px;
+`;
+
 const ToggleSwitch = () => {
   const [isChecked, setIsChecked] = useState(false);
 
   return (
     <SwitchWrapper>
+      <AdminHeader>
+      <p>Admin:</p>
+      </AdminHeader>
       <Checkbox checked={isChecked} onChange={() => setIsChecked(!isChecked)} />
       <Slider />
     </SwitchWrapper>
