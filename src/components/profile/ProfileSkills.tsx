@@ -12,6 +12,7 @@ const SkillsWrapper = styled.div`
     list-style: none;
     margin-top: 20px;
 
+
     h2{
         color: #e7daf5;
     }
@@ -64,7 +65,7 @@ const Skills = () => {
     return (
         <ul>
             <SkillsWrapper>
-                <h2>Mine skills:</h2>
+                <h2>My skills:</h2>
                 {skills && skills.map((skill, index) => (
                     <li key={index}>{skill}</li>
                 ))}

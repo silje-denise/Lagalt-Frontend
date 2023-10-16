@@ -7,16 +7,12 @@ import styled from "styled-components";
 import keycloak from "./../keycloak";
 import ProjectListItem from "../components/projects/public/ProjectListItem.tsx";
 
-
-// styled AdminHeader = styled
-
-
 const ProfilePage = () => {
     return(
         <div>
             <UserInfo/>
             <Skills/>
-            <AdminToggle/>
+            {/* <AdminToggle/> */}
             <Projects/>
             
         </div>
