@@ -1,4 +1,5 @@
 import {
+  faArrowUpRightFromSquare,
   faCircle,
   faCircleUser,
   faPenToSquare,
@@ -13,12 +14,16 @@ import EditProjectForm from "./EditProjectForm.tsx";
 const Title = styled.div`
   font-weight: bold;
   margin: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 650px;
 `;
 const Description = styled.div`
   color: #d7c1ee;
-  margin-bottom: 10px;
   line-height: 1.3;
   max-width: 75ch;
+  margin-bottom: 25px;
 `;
 const StyledProjectListItem = styled.div`
   padding: 25px;
@@ -67,24 +72,16 @@ const Wrapper = styled.div`
 `;
 const Button = styled(Link)`
   all: unset;
-  background-color: #7834bb;
-  border-radius: 20px;
+  font-weight: bold;
   padding: 10px 20px;
   color: white;
   height: fit-content;
-  width: fit-content;
+  cursor: pointer;
 
   &:hover {
-    background-color: #975dd2;
+    color: #975dd2;
+    text-decoration: underline;
   }
-`;
-
-const Details = styled.ul`
-  margin: 30px 0;
-`;
-
-const CollaborationHeader = styled.div`
-  margin-bottom: 20px;
 `;
 
 const Container = styled.div`
@@ -158,7 +155,6 @@ const EditProject = ({
   collaborators,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  //const [isHidden, setIsHidden] = useState(false);
   const [projects, setProjects] = useState([]);
 
   const handleOnclick = () => {
@@ -191,9 +187,8 @@ const EditProject = ({
     <Container>
       <section>
         <StyledProjectListItem>
-          <Title>{title}</Title>
-          <Description>{fullDescription}</Description>
-          <Details>
+          <Title>
+            {title}
             {progress === 0 && (
               <div>
                 <FontAwesomeIcon icon={faCircle} color={"#4991de"} /> Founding
@@ -201,7 +196,8 @@ const EditProject = ({
             )}
             {progress === 1 && (
               <div>
-                <FontAwesomeIcon icon={faCircle} color={"#F2B84B"} /> In progress
+                <FontAwesomeIcon icon={faCircle} color={"#F2B84B"} /> In
+                progress
               </div>
             )}
             {progress === 2 && (
@@ -209,14 +205,14 @@ const EditProject = ({
                 <FontAwesomeIcon icon={faCircle} color={"#F28D52"} /> Stalled
               </div>
             )}
-               {progress === 3 && (
+            {progress === 3 && (
               <div>
                 <FontAwesomeIcon icon={faCircle} color={"67d149"} /> Completed
               </div>
             )}
-          </Details>
+          </Title>
+          <Description>{fullDescription}</Description>
 
-          {/* <CollaborationHeader>Collaborators:</CollaborationHeader> */}
           <Wrapper>
             <Collaborators>
               <Collaborator>
@@ -247,12 +243,13 @@ const EditProject = ({
                             "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png";
                         }}
                       />
-                      {collaborator.username}
                     </Collaborator>
                   );
                 })}
             </Collaborators>
-            <Button to={githubUrl}>Go to Github</Button>
+            <Button to={githubUrl}>
+              Go to Github <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+            </Button>
           </Wrapper>
         </StyledProjectListItem>
       </section>

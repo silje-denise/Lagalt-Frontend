@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import keycloak from "../../../keycloak";
 import ApplicationForm from "./ApplicationForm.tsx";
 
 const Title = styled.div`
@@ -77,16 +76,11 @@ const GithubLink = styled(Link)`
   &:hover {
     color: #975dd2;
     text-decoration: underline;
-    //7834bb
   }
 `;
 
 const Details = styled.div`
   margin: 30px 0;
-`;
-
-const CollaborationHeader = styled.div`
-  margin-bottom: 20px;
 `;
 
 const Container = styled.div`
@@ -122,6 +116,7 @@ const Skill = styled.div`
 
 const TopSection = styled.section`
   padding: 25px 25px 0 25px;
+  margin-bottom: 25px;
 `;
 
 const JoinButton = styled.button`
@@ -239,7 +234,7 @@ const PrivateDetailedProject = ({
             )}
           </Wrapper>
         </TopSection>
-        <br />
+
         <section>
           <Skills>
             {neededSkills &&
