@@ -8,20 +8,25 @@ import keycloak from "../../../keycloak";
 const Title = styled.div`
   font-weight: bold;
   margin: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 const Description = styled.div`
   color: #d7c1ee;
-  margin-bottom: 10px;
+  margin-bottom: 25px;
   line-height: 1.3;
   max-width: 75ch;
 `;
 const StyledProjectListItem = styled.div`
-  padding: 25px;
+overflow: hidden;
+ 
   border-radius: 20px;
   background-color: #28113e;
   display: flex;
   flex-direction: column;
   width: 100%;
+
 `;
 const Image = styled.img`
   width: 40px;
@@ -71,6 +76,33 @@ const Button = styled(Link)`
   }
 `;
 
+const TopSection = styled.section`
+  padding: 25px 25px 0 25px;
+  margin-bottom: 25px;
+`;
+
+const Skills = styled.div`
+  background-color: #481f70;
+  gap: 5px;
+  padding: 25px;
+  display: flex;
+`;
+
+const Skill = styled.div`
+  background-color: #481f70;
+  color: #a673d8;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-transform: capitalize;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: default;
+  border: 2px solid #a673d8;
+  font-weight: bolder;
+`;
+
+
 const Details = styled.ul`
   margin: 30px 0;
 `;
@@ -98,14 +130,13 @@ const DetailedProject = ({
   githubUrl,
   progress,
   collaborators,
+  neededSkills
 }) => {
   return (
     <Container>
       <StyledProjectListItem>
-        <Title>{title}</Title>
-        <Description>{fullDescription}</Description>
-        <Details>
-            {progress === 0 && (
+        <TopSection>
+        <Title>{title} {progress === 0 && (
               <div>
                 <FontAwesomeIcon icon={faCircle} color={"#4991de"} /> Founding
               </div>
@@ -124,8 +155,11 @@ const DetailedProject = ({
               <div>
                 <FontAwesomeIcon icon={faCircle} color={"#67d149"} /> Completed
               </div>
-            )}
-          </Details>
+            )}</Title>
+        <Description>{fullDescription}</Description>
+        {/* <Details>
+           
+          </Details> */}
 
         {/* <CollaborationHeader>Collaborators:</CollaborationHeader> */}
         <Wrapper>
@@ -158,7 +192,6 @@ const DetailedProject = ({
                           "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png")
                       }
                     />
-                    {collaborator.username}
                   </Collaborator>
                 );
               })}
@@ -168,6 +201,17 @@ const DetailedProject = ({
             <Button to={githubUrl}>Go to Github</Button>
           )} */}
         </Wrapper>
+          </TopSection>
+          
+        <section>
+          <Skills>
+            {neededSkills &&
+              neededSkills.map((skill) => {
+                return <Skill>#{skill}</Skill>;
+              })}
+          </Skills>
+        </section>
+
       </StyledProjectListItem>
     </Container>
   );

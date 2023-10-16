@@ -4,8 +4,8 @@ import styled from "styled-components";
 import DetailedProject from "../components/projects/public/DetailedProject.tsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-import EditDetailedProject from "../components/projects/admin/EditProject.tsx";
 import keycloak from "../keycloak.js";
+import PrivateDetailedProject from "../components/projects/private/PrivateDetailedProject.tsx";
 
 const Wrapper = styled.div`
   display: flex;
@@ -60,10 +60,11 @@ const ProjectDetail = () => {
           <FontAwesomeIcon icon={faChevronLeft} />
         </Button>
         <Project>
+          {/*Add logic for when a user can have admin privileges */}
           {keycloak.authenticated ? (
             <>
               {project ? (
-                <EditDetailedProject
+                <PrivateDetailedProject
                   title={project.title}
                   fullDescription={project.fullDescription}
                   id={id}
@@ -72,6 +73,7 @@ const ProjectDetail = () => {
                   image={project.creator.imageUrl}
                   progress={project.progress}
                   collaborators={project.collaborators}
+                  neededSkills={project.neededSkills}
                 />
               ) : (
                 <div>Loading project details...</div>

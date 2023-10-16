@@ -32,16 +32,15 @@ const TestPage = () => {
         }
     ];
 
-    let skills = ["Frontend", "Backend", "CSharp"];
+  let skills = ["Frontend", "Backend", "CSharp"];
+  
   return (
     <Main>
-      <EditProject title={"EditProject component"} fullDescription={"Testing the description"} creator={creators[0].username} image={creators[0].imageUrl} id={1} githubUrl={undefined} progress={0} collaborators={creators} />
+      <EditProject title={"EditProject component"} fullDescription={"Testing the description.   Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellendus totam consectetur laborum cupiditate dolor suscipit officia quia expedita voluptate laboriosam ad saepe provident esse fugiat consequuntur facilis voluptatem maxime, nostrum itaque quisquam eaque accusantium nihil. Doloribus necessitatibus nam atque hic voluptatum rerum, officiis nesciunt sunt! Amet qui nulla quibusdam voluptatem natus cum veniam odio officiis laudantium mollitia."} creator={creators[0].username} image={creators[0].imageUrl} id={1} githubUrl={undefined} progress={0} collaborators={creators} />
       <br/>
-      <DetailedProject title={"DetailedProject component"} fullDescription={"Testing the description"} creator={creators[1].username} image={creators[1].imageUrl} id={2} githubUrl={undefined} progress={1} collaborators={creators} />
+      <DetailedProject title={"PublicDetailedProject component"} fullDescription={"Testing the description sidjfisodfjsidfjæasejfio<sjefiajwiefo ajwseodfjWSEDFOjweif jawiedfjiosjedifjesidjfilseifjisljeifljsiejfilsjiejdfisjijdfisifsjfiesijfiliefseifjsirjøirjfsrdjfdi lsifjsiljdfisjdilfsjfsiefsjilfjslej fisefislidfjslifeifj ji eif imeisflijefilsmifmsielsimflsmelkfm lekem l smkfesklfmekfklseklf me mkesfkekflsefml"} creator={creators[1].username} image={creators[1].imageUrl} id={2} githubUrl={undefined} progress={1} collaborators={creators} neededSkills={skills} />
       <br/>
-      <PrivateDetailedProject title={"PrivateDetailedProject component"} fullDescription={"Testing the description"} creator={creators[2].username} image={creators[2].imageUrl} id={3} githubUrl={undefined} progress={2} collaborators={creators} neededSkills={skills} />
-      <br/>
-      <PrivateDetailedProject title={"PrivateDetailedProject component"} fullDescription={"Testing the description"} creator={creators[2].username} image={creators[2].imageUrl} id={3} githubUrl={undefined} progress={3} collaborators={creators} neededSkills={skills} />
+      <PrivateDetailedProject title={"PrivateDetailedProject component"} fullDescription={"Testing the description sierjgfiawlrsdgaiwrj gii gaisr jgi asgrig nnsij gsr gjsrlifgjfisjlkflsejflsajildfjglasrjgf jlirsjf gliskjfgd lkjslrifg jlsjflgmjlzdflglszdkfgvlksdfzmglkv klrsgkl sdlkfg lkdfmg lksfd lkgm ksdf klg ksdfm lkfdmklgmklskldflskfmlsdklfmskeldfsldkfklsdmk lffklf sldk flksdm flkskdl mflkmsldkfmlknsdlfkjksldzfmgklsdgkldfklgkld fgkllfdskglsdkf ksdfkl skdf kljs dlkfkl "} creator={creators[2].username} image={creators[2].imageUrl} id={3} githubUrl={undefined} progress={2} collaborators={creators} neededSkills={skills} />
     </Main>
   );
 };

@@ -1,13 +1,20 @@
-import { faCircle, faCircleUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowUpRightFromSquare,
+  faCircle,
+  faCircleUser,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import keycloak from "../../../keycloak";
+import ApplicationForm from "./ApplicationForm.tsx";
 
 const Title = styled.div`
   font-weight: bold;
   margin: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 const Description = styled.div`
   color: #d7c1ee;
@@ -58,26 +65,22 @@ const Wrapper = styled.div`
     gap: 40px;
   }
 `;
-const Button = styled(Link)`
+const GithubLink = styled(Link)`
   all: unset;
-  background-color: #7834bb;
-  border-radius: 20px;
+  font-weight: bold;
   padding: 10px 20px;
   color: white;
   height: fit-content;
   cursor: pointer;
 
   &:hover {
-    background-color: #975dd2;
+    color: #975dd2;
+    text-decoration: underline;
   }
 `;
 
-const Details = styled.ul`
+const Details = styled.div`
   margin: 30px 0;
-`;
-
-const CollaborationHeader = styled.div`
-  margin-bottom: 20px;
 `;
 
 const Container = styled.div`
@@ -113,6 +116,21 @@ const Skill = styled.div`
 
 const TopSection = styled.section`
   padding: 25px 25px 0 25px;
+  margin-bottom: 25px;
+`;
+
+const JoinButton = styled.button`
+  all: unset;
+  background-color: #7834bb;
+  border-radius: 20px;
+  padding: 10px 20px;
+  color: white;
+  height: fit-content;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #975dd2;
+  }
 `;
 
 const PrivateDetailedProject = ({
@@ -126,13 +144,22 @@ const PrivateDetailedProject = ({
   collaborators,
   neededSkills,
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOnclick = () => {
+    if (isOpen) {
+      setIsOpen(false);
+    } else {
+      setIsOpen(true);
+    }
+  };
+
   return (
     <Container>
       <StyledProjectListItem>
         <TopSection>
-          <Title>{title}</Title>
-          <Description>{fullDescription}</Description>
-          <Details>
+          <Title>
+            {title}
             {progress === 0 && (
               <div>
                 <FontAwesomeIcon icon={faCircle} color={"#4991de"} /> Founding
@@ -140,7 +167,8 @@ const PrivateDetailedProject = ({
             )}
             {progress === 1 && (
               <div>
-                <FontAwesomeIcon icon={faCircle} color={"#F2B84B"} /> In progress
+                <FontAwesomeIcon icon={faCircle} color={"#F2B84B"} /> In
+                progress
               </div>
             )}
             {progress === 2 && (
@@ -148,11 +176,18 @@ const PrivateDetailedProject = ({
                 <FontAwesomeIcon icon={faCircle} color={"#F28D52"} /> Stalled
               </div>
             )}
-               {progress === 3 && (
+            {progress === 3 && (
               <div>
                 <FontAwesomeIcon icon={faCircle} color={"#67d149"} /> Completed
               </div>
             )}
+          </Title>
+          <Description>{fullDescription}</Description>
+
+          <Details>
+            <GithubLink to={githubUrl}>
+              Go to Github <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+            </GithubLink>
           </Details>
 
           {/* <CollaborationHeader>Collaborators:</CollaborationHeader> */}
@@ -190,11 +225,16 @@ const PrivateDetailedProject = ({
                   );
                 })}
             </Collaborators>
-
-            <Button to={githubUrl}>Go to Github</Button>
+            {/* The users can only join a project if it is still not finished */}
+            {progress !== 3 && (
+              <>
+                <JoinButton onClick={handleOnclick}>Join our team</JoinButton>
+                <ApplicationForm isOpen={isOpen} />
+              </>
+            )}
           </Wrapper>
         </TopSection>
-        <br />
+
         <section>
           <Skills>
             {neededSkills &&
