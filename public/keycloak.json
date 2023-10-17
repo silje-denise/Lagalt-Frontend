@@ -2,7 +2,7 @@
   "realm": "lagalt-auth",
   "auth-server-url": "https://lemur-10.cloud-iam.com/auth/",
   "ssl-required": "external",
-  "resource": "https://lagalt-frontend-plum.vercel.app/",
+  "resource": "https://lagalt-frontend-git-deployment-silje-denise.vercel.app/",
   "public-client": true,
   "confidential-port": 0
 }
