@@ -44,6 +44,10 @@ const ProjectDetail = () => {
   const navigate = useNavigate();
 
   const apiUrl = process.env.REACT_APP_API_URL;
+  let username = ""
+  if(keycloak.tokenParsed){
+      username = `${keycloak.tokenParsed.preferred_username}`
+  }
 
   //Get data about the selected project from API
   useEffect(() => {
@@ -53,15 +57,21 @@ const ProjectDetail = () => {
       .catch((error) => console.error("Error fetching project data: ", error));
   }, [apiUrl, id]);
 
+
+
+
   return (
+    
     <>
       <Wrapper>
         <Button onClick={() => navigate("/")}>
           <FontAwesomeIcon icon={faChevronLeft} />
         </Button>
         <Project>
+          
           {/*Add logic for when a user can have admin privileges */}
-          {keycloak.authenticated ? (
+          {keycloak.authenticated && project && username === project.creator.username ?( 
+            
             <>
               {project ? (
                 <PrivateDetailedProject
