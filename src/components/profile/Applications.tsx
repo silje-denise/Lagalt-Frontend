@@ -4,7 +4,7 @@ import keycloak from "../../keycloak";
 
 
 const Applications = () => {
-    const [application, setApplication] = useState<string[]>([]);
+    const [applications, setApplications] = useState([]);
   
     const apiUrl = process.env.REACT_APP_API_URL;
     let username = ""
@@ -12,20 +12,32 @@ const Applications = () => {
         username = `${keycloak.tokenParsed.preferred_username}`
     }
 
+        
     useEffect(() => {
-      fetch(`${apiUrl}/api/v1/Users/${username}`)
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-            return response.json();
-        })
-        .then((data) => {
-            setApplication(data.applications);
-            console.log("Hello", application);
-        })
-        .catch((error) => console.error("Error fetching profile data: ", error));
-    }, [apiUrl, username, application]);
+        fetch(`${apiUrl}/api/v1/Users/${username}`)
+            .then(response => response.json())
+            .then(data => {
+                setApplications(data.applications);
+            })
+            .catch(error => console.error('Error fetching applications:', error));
+    }, []);
+    
+    return (
+        <div>
+            <h1>Applications</h1>
+            <ul>
+                {applications.map(a => (
+                    <li>
+                        {a.content}
+                        {a.user}
+                        {a.project}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+
+
 
 
 }

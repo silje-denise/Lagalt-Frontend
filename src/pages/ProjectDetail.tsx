@@ -59,8 +59,6 @@ const ProjectDetail = () => {
   }, [apiUrl, id]);
 
 
-
-
   return (
     
     <>
