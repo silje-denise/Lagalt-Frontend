@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import keycloak from "../keycloak.js";
 import PrivateDetailedProject from "../components/projects/private/PrivateDetailedProject.tsx";
+import EditProject from "../components/projects/admin/EditProject.tsx";
 
 const Wrapper = styled.div`
   display: flex;
@@ -74,6 +75,21 @@ const ProjectDetail = () => {
             
             <>
               {project ? (
+                <EditProject
+                  title={project.title}
+                  fullDescription={project.fullDescription}
+                  id={id}
+                  githubUrl={project.githubUrl}
+                  creator={project.creator.username}
+                  image={project.creator.imageUrl}
+                  progress={project.progress}
+                  collaborators={project.collaborators}
+                  
+                />
+              ) : (
+                <div>Loading project details...</div>
+              )}
+              {/* {project ? (
                 <PrivateDetailedProject
                   title={project.title}
                   fullDescription={project.fullDescription}
@@ -87,21 +103,22 @@ const ProjectDetail = () => {
                 />
               ) : (
                 <div>Loading project details...</div>
-              )}
+              )} */}
             </>
           ) : (
             <>
               {project ? (
                 <DetailedProject
-                  title={project.title}
-                  fullDescription={project.fullDescription}
-                  id={id}
-                  githubUrl={project.githubUrl}
-                  creator={project.creator.username}
-                  image={project.creator.imageUrl}
-                  progress={project.progress}
-                  collaborators={project.collaborators}
-                />
+                    title={project.title}
+                    fullDescription={project.fullDescription}
+                    id={id}
+                    githubUrl={project.githubUrl}
+                    creator={project.creator.username}
+                    image={project.creator.imageUrl}
+                    progress={project.progress}
+                    collaborators={project.collaborators} 
+                    neededSkills={project.skills}                
+                    />
               ) : (
                 <div>Loading project details...</div>
               )}

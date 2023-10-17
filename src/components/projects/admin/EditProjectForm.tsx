@@ -7,7 +7,7 @@ const StyledDialog = styled.div`
   z-index: 100;
   width: 50%;
   position: fixed;
-  top: 15%;
+  top: 83px;
   left: 25%;
   border-radius: 20px;
   padding: 20px;
@@ -99,13 +99,17 @@ const EditProjectForm = ({
   fullDescription,
   creator,
   githubUrl,
+  progress,
+  id
 }) => {
 
     
 
     const [isChecked, setIsChecked] = useState(false);
+    const apiUrl = process.env.REACT_APP_API_URL;
     //Form
-    const [newTitle, setNewTitle] = useState();
+    const [selected, setSelected] = useState("");
+    const [description, setDescription] = useState("");
 
     const checkProgressButton = () => {
         console.log(isChecked);
@@ -121,33 +125,53 @@ const EditProjectForm = ({
     isOpen = false;
   };
 
-  //FIX
-  const updateProject = () => {
-    console.log(newTitle);
-  }
+  console.log("id: " + id);
+  console.log("description: " + description);
 
-//   const changeTitle = (e) => {
-//     setNewTitle(e.target.value);
-//     console.log(newTitle);
-//   }
+  // const checkSelectedValue = () => {
+  //   if(selected === progress){
+  //     setSelected();
+  //   }
+  // }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target.value;
+    const formData = new FormData(form);
+
+    console.log("form" + formData.get('description'));
+
+    const requestOptions = {
+      method: "PUT",
+      headers: {'Content-Type': 'multipart/form-data'},
+      body: formData,
+    }
+
+    fetch(`${apiUrl}/api/v1/projects/${id}`, requestOptions);
+    
+
+    x();
+  }
 
   return (
     <>
       {isOpen && (
         <StyledDialog>
           <Header>Editing "{title}"</Header>
-          <StyledForm>
-            <InputWrapper>
-              <label>Title: </label>
-              <input type="text" defaultValue={title}/>
-            </InputWrapper>
+          <StyledForm method="PUT" onSubmit={handleSubmit}>
             <InputWrapper>
               <label>Description: </label>
-              <textarea maxLength={3000} defaultValue={fullDescription} />
+              <textarea maxLength={3000} value={description} onChange={e => setDescription(e.target.value)}/>
             </InputWrapper>
             <InputWrapper>
               <div>Progress: </div>
-              <ProgressButton>
+              <select onChange={e => setSelected(e.target.value)} value={selected}>
+                <option value={0}>Founding</option>
+                <option value={1}>In progress</option>
+                <option value={2}>Stalled</option>
+                <option value={3}>Completed</option>
+              </select>
+              {/* <ProgressButton>
                 <label>Not started: </label>
                 <input type="radio"  checked={isChecked} onChange={() => checkProgressButton }/>
               </ProgressButton>
@@ -158,22 +182,16 @@ const EditProjectForm = ({
               <ProgressButton>
                 <label>Finished: </label>
                 <input type="radio"  checked={isChecked} onChange={() => checkProgressButton }/>
-              </ProgressButton>
+              </ProgressButton> */}
             </InputWrapper>
-            <InputWrapper>
-              <label>Creator: </label>
-              <input type="text" defaultValue={creator} />
-            </InputWrapper>
-            <InputWrapper>
-              <label>Github url: </label>
-              <input type="text" defaultValue={githubUrl} />
-            </InputWrapper>
+       
             <br />
             <ButtonContainer>
-              <button onClick={x}>Cancel</button>
-              <button onClick={x}>Done</button>
+             
+              <button type="submit">Submit change</button>
             </ButtonContainer>
           </StyledForm>
+          <button onClick={x}>Cancel</button>
         </StyledDialog>
       )}
     </>

@@ -156,6 +156,9 @@ const EditProject = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [projects, setProjects] = useState([]);
+  const [status, setStatus] = useState("");
+
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleOnclick = () => {
     if (isOpen) {
@@ -165,23 +168,28 @@ const EditProject = ({
     }
   };
 
-  const testCall = () => {
-    const apiUrl = process.env.REACT_APP_API_URL;
+  // const testCall = () => {
+  //   const apiUrl = process.env.REACT_APP_API_URL;
 
-    fetch(`${apiUrl}/api/v1/projects`)
-      .then((response) => response.json())
-      .then((data) => setProjects(data))
-      .catch((error) => console.error("Error fetching projects", error));
-  };
+  //   fetch(`${apiUrl}/api/v1/projects`)
+  //     .then((response) => response.json())
+  //     .then((data) => setProjects(data))
+  //     .catch((error) => console.error("Error fetching projects", error));
+  // };
 
   const deleteProject = () => {
     let confirm = window.confirm(
       "Are you sure you want to delete this project? \n This action cannot be undone!"
     );
-    if (confirm) {
-      //testCall();
+     if (confirm) {
+    //     fetch(`${apiUrl}/api/v1/projects/${id}`, {method: 'DELETE',})
+    //     .then(response => response.json())
+    //     .then(() => setStatus('Delete successful'));
     }
+    // alert(status);
   };
+
+  console.log('progress editproject: ' + progress)
 
   return (
     <Container>
@@ -266,8 +274,7 @@ const EditProject = ({
         title={title}
         fullDescription={fullDescription}
         creator={creator}
-        githubUrl={githubUrl}
-      />
+        githubUrl={githubUrl} progress={progress} id={id}      />
     </Container>
   );
 };
