@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Form } from "react-router-dom";
 import styled from "styled-components";
 
 const StyledDialog = styled.div`
@@ -48,21 +47,10 @@ const Header = styled.h2`
   font-size: 19px;
 `;
 
-const Overlay = styled.div`
-  background-color: rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(2px);
-  z-index: 50;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vw;
-  // display: ${(isOpen) => (isOpen ? "flex" : "none")}
-`;
-
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
+  margin-top: 10px;
 
   button {
     all: unset;
@@ -81,117 +69,90 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const ProgressButton = styled.div`
-  display: flex;
-  align-items: center;
-  margin-left: 20px;
-
-  input {
-    width: 20px;
-    margin: 0;
-    margin-left: 5px;
-  }
-`;
-
 const EditProjectForm = ({
   isOpen,
   title,
   fullDescription,
-  creator,
-  githubUrl,
   progress,
-  id
+  id,
 }) => {
 
-    
+  const apiUrl = process.env.REACT_APP_API_URL;
+  const [selected, setSelected] = useState("");
+  const [description, setDescription] = useState("");
 
-    const [isChecked, setIsChecked] = useState(false);
-    const apiUrl = process.env.REACT_APP_API_URL;
-    //Form
-    const [selected, setSelected] = useState("");
-    const [description, setDescription] = useState("");
-
-    const checkProgressButton = () => {
-        console.log(isChecked);
-        if(isChecked){
-            setIsChecked(false);
-        }else{
-            setIsChecked(true);
-        }
-       console.log(isChecked);
-    }
-
-  const x = () => {
-    isOpen = false;
+  const closeDialog = () => {
+    window.location.reload();
   };
-
-  console.log("id: " + id);
-  console.log("description: " + description);
-
-  // const checkSelectedValue = () => {
-  //   if(selected === progress){
-  //     setSelected();
-  //   }
-  // }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const form = e.target.value;
-    const formData = new FormData(form);
+    const form = e.target;
+    e.persist();
 
-    console.log("form" + formData.get('description'));
+    const formData = new FormData(form);
+    formData.append("Id", id);
+    formData.append("Progress", selected);
+    formData.append("FullDescription", description);
 
     const requestOptions = {
       method: "PUT",
-      headers: {'Content-Type': 'multipart/form-data'},
       body: formData,
-    }
+    };
 
-    fetch(`${apiUrl}/api/v1/projects/${id}`, requestOptions);
-    
+    fetch(`${apiUrl}/api/v1/projects/${id}`, requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Handle the data from the API if needed
+        console.log(data);
+      })
+      .catch((error) => {
+        // Handle errors here
+        console.error("There was a problem with the fetch operation:", error);
+      });
 
-    x();
-  }
+      closeDialog();
+  };
 
   return (
     <>
-      {isOpen && (
+      {isOpen &&(
         <StyledDialog>
           <Header>Editing "{title}"</Header>
           <StyledForm method="PUT" onSubmit={handleSubmit}>
             <InputWrapper>
               <label>Description: </label>
-              <textarea maxLength={3000} value={description} onChange={e => setDescription(e.target.value)}/>
+              <textarea
+                maxLength={3000}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                name="FullDescription"
+              />
             </InputWrapper>
             <InputWrapper>
               <div>Progress: </div>
-              <select onChange={e => setSelected(e.target.value)} value={selected}>
+              <select
+                onChange={(e) => setSelected(e.target.value)}
+                value={selected}
+                name="Progress"
+              >
                 <option value={0}>Founding</option>
                 <option value={1}>In progress</option>
                 <option value={2}>Stalled</option>
                 <option value={3}>Completed</option>
               </select>
-              {/* <ProgressButton>
-                <label>Not started: </label>
-                <input type="radio"  checked={isChecked} onChange={() => checkProgressButton }/>
-              </ProgressButton>
-              <ProgressButton>
-                <label>In progress: </label>
-                <input type="radio"  checked={isChecked} onChange={() => checkProgressButton }/>
-              </ProgressButton>
-              <ProgressButton>
-                <label>Finished: </label>
-                <input type="radio"  checked={isChecked} onChange={() => checkProgressButton }/>
-              </ProgressButton> */}
             </InputWrapper>
-       
-            <br />
             <ButtonContainer>
              
               <button type="submit">Submit change</button>
             </ButtonContainer>
           </StyledForm>
-          <button onClick={x}>Cancel</button>
+          <button onClick={closeDialog}>Cancel</button>
         </StyledDialog>
       )}
     </>

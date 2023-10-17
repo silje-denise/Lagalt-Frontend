@@ -14,6 +14,7 @@ import EditProjectForm from "./EditProjectForm.tsx";
 const Title = styled.div`
   font-weight: bold;
   margin: 10px 0;
+  margin-right: 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -155,9 +156,6 @@ const EditProject = ({
   collaborators,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [projects, setProjects] = useState([]);
-  const [status, setStatus] = useState("");
-
   const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleOnclick = () => {
@@ -168,28 +166,19 @@ const EditProject = ({
     }
   };
 
-  // const testCall = () => {
-  //   const apiUrl = process.env.REACT_APP_API_URL;
-
-  //   fetch(`${apiUrl}/api/v1/projects`)
-  //     .then((response) => response.json())
-  //     .then((data) => setProjects(data))
-  //     .catch((error) => console.error("Error fetching projects", error));
-  // };
-
   const deleteProject = () => {
     let confirm = window.confirm(
       "Are you sure you want to delete this project? \n This action cannot be undone!"
     );
-     if (confirm) {
-    //     fetch(`${apiUrl}/api/v1/projects/${id}`, {method: 'DELETE',})
-    //     .then(response => response.json())
-    //     .then(() => setStatus('Delete successful'));
+    if (confirm) {
+      //     fetch(`${apiUrl}/api/v1/projects/${id}`, {method: 'DELETE',})
+      //     .then(response => response.json())
+      //     .then(() => setStatus('Delete successful'));
     }
     // alert(status);
   };
 
-  console.log('progress editproject: ' + progress)
+  console.log("progress editproject: " + progress);
 
   return (
     <Container>
@@ -215,7 +204,7 @@ const EditProject = ({
             )}
             {progress === 3 && (
               <div>
-                <FontAwesomeIcon icon={faCircle} color={"67d149"} /> Completed
+                <FontAwesomeIcon icon={faCircle} color={"#67d149"} /> Completed
               </div>
             )}
           </Title>
@@ -273,8 +262,9 @@ const EditProject = ({
         isOpen={isOpen}
         title={title}
         fullDescription={fullDescription}
-        creator={creator}
-        githubUrl={githubUrl} progress={progress} id={id}      />
+        progress={progress}
+        id={id}
+      />
     </Container>
   );
 };
