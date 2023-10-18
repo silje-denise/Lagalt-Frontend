@@ -37,20 +37,29 @@ const Logo = styled.div`
   align-items: center;
 `;
 const Image = styled.img`
-  width: 40px;
-  height: auto;
+  height: 40px;
 `;
 
+/**
+ * A navigation bar component that displays links to various sections of the app and login/logout buttons.
+ *
+ * @component
+ * @returns {JSX.Element} The rendered navigation bar.
+ */
 const Navbar = () => {
+  // Initialize the link to "/notLoggedIn"
   let link = "/notLoggedIn";
+  // Check if the user is authenticated (logged in) using Keycloak
   if (keycloak.tokenParsed) {
+    // If authenticated, set the link to the user's profile page
     link = `/users/${keycloak.tokenParsed.preferred_username}`;
   }
   return (
     <StyledNavbar>
       <Logo>
-        <Image src="./../assets/lagalt-logo-new.png" alt="Lagalt logo" />
-        <Link to="/">Lagalt</Link>
+        <Link to="/">
+          <Image src="./../assets/LogoText.svg" alt="Lagalt logo" />
+        </Link>
       </Logo>
       <NavWrapper>
         <li>

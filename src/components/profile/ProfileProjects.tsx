@@ -5,15 +5,13 @@ import ProjectListItem from "../projects/public/ProjectListItem.tsx";
 import ProjectList from "../projects/public/ProjectList.tsx";
 
 const ProfileProjectWrapper = styled.ul`
-    background-color: #28113e;
-    width: 300px;
-    height: 300px;
-    padding-left: 50px;
-    padding-top: 10px;
     border-radius: 20px;
     list-style: none;
-    margin-top: 20px;
-    margin-left: 35px;
+    position: relative;
+    bottom: 480px;
+    left: 400px;
+    width: 1000px;
+    //background-color: black;
 
     h3{
         color: #e7daf5;
@@ -44,12 +42,9 @@ const Projects = () => {
       }, [apiUrl]);
 
       return (
-        <ul>
-            <h3>
-                My projects: 
-            </h3>
+        <ProfileProjectWrapper>
             <ProjectList projects = {projects}/>
-        </ul>
+        </ProfileProjectWrapper>
       )
 };
 

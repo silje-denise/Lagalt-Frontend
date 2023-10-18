@@ -40,18 +40,6 @@ const Header = styled.h2`
   font-size: 19px;
 `;
 
-const Overlay = styled.div`
-  background-color: rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(2px);
-  z-index: 50;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vw;
-  // display: ${(isOpen) => (isOpen ? "flex" : "none")}
-`;
-
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -72,29 +60,29 @@ const ButtonContainer = styled.div`
     }
   }
 `;
-
-const ApplicationForm = ({isOpen}) => {
-    const x = () => {
-        isOpen = false;
-      };
-    return(
+//TODO: add a POST request to send the form
+const ApplicationForm = ({ isOpen }) => {
+  const x = () => {
+    isOpen = false;
+  };
+  return (
     <>
- {isOpen && (
-          <StyledDialog>
-            <Header>Tell us why you want to join our team</Header>
-            <StyledForm>
-              <InputWrapper>
-                <textarea maxLength={3000} placeholder="Start typing..."/>
-              </InputWrapper>
-            <br/>
-              <ButtonContainer>
-                <button onClick={x}>Cancel</button>
-                <button onClick={x}>Done</button>
-              </ButtonContainer>
-            </StyledForm>
-          </StyledDialog>
-        )}
+      {isOpen && (
+        <StyledDialog>
+          <Header>Tell us why you want to join our team</Header>
+          <StyledForm>
+            <InputWrapper>
+              <textarea maxLength={3000} placeholder="Start typing..." />
+            </InputWrapper>
+            <br />
+            <ButtonContainer>
+              <button onClick={x}>Cancel</button>
+              <button onClick={x}>Done</button>
+            </ButtonContainer>
+          </StyledForm>
+        </StyledDialog>
+      )}
     </>
-    );
-}
+  );
+};
 export default ApplicationForm;

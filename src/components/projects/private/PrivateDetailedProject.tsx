@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import keycloak from "../../../keycloak";
 import ApplicationForm from "./ApplicationForm.tsx";
 
 const Title = styled.div`
@@ -77,16 +76,11 @@ const GithubLink = styled(Link)`
   &:hover {
     color: #975dd2;
     text-decoration: underline;
-    //7834bb
   }
 `;
 
 const Details = styled.div`
   margin: 30px 0;
-`;
-
-const CollaborationHeader = styled.div`
-  margin-bottom: 20px;
 `;
 
 const Container = styled.div`
@@ -122,6 +116,7 @@ const Skill = styled.div`
 
 const TopSection = styled.section`
   padding: 25px 25px 0 25px;
+  margin-bottom: 25px;
 `;
 
 const JoinButton = styled.button`
@@ -138,6 +133,21 @@ const JoinButton = styled.button`
   }
 `;
 
+/**
+ * A component displaying detailed project information for private projects.
+ *
+ * @component
+ * @param {string} title - The title of the project.
+ * @param {string} fullDescription - The full description of the project.
+ * @param {string} creator - The creator of the project.
+ * @param {string} image - The image representing the creator.
+ * @param {string} id - The unique identifier of the project.
+ * @param {string} githubUrl - The GitHub URL of the project.
+ * @param {number} progress - The progress status of the project (0: Founding, 1: In progress, 2: Stalled, 3: Completed).
+ * @param {Array} collaborators - An array of collaborators for the project.
+ * @param {Array} neededSkills - An array of skills needed for the project.
+ * @returns {JSX.Element} The rendered detailed project information for private projects.
+ */
 const PrivateDetailedProject = ({
   title,
   fullDescription,
@@ -149,8 +159,8 @@ const PrivateDetailedProject = ({
   collaborators,
   neededSkills,
 }) => {
+  //Handle the dialog box for the application form
   const [isOpen, setIsOpen] = useState(false);
-
   const handleOnclick = () => {
     if (isOpen) {
       setIsOpen(false);
@@ -195,7 +205,6 @@ const PrivateDetailedProject = ({
             </GithubLink>
           </Details>
 
-          {/* <CollaborationHeader>Collaborators:</CollaborationHeader> */}
           <Wrapper>
             <Collaborators>
               <Collaborator>
@@ -215,22 +224,24 @@ const PrivateDetailedProject = ({
               </Collaborator>
 
               {collaborators &&
-                collaborators.map((collaborator) => {
-                  return (
-                    <Collaborator>
-                      <Image
-                        src={collaborator.imageUrl}
-                        alt={`Picture of ${collaborator.username}`}
-                        onError={(e) => {
-                          e.currentTarget.src =
-                            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png";
-                        }}
-                      />
-                    </Collaborator>
-                  );
-                })}
+                collaborators.map(
+                  (collaborator: { imageUrl: string; username: string }) => {
+                    return (
+                      <Collaborator>
+                        <Image
+                          src={collaborator.imageUrl}
+                          alt={`Picture of ${collaborator.username}`}
+                          onError={(e) => {
+                            e.currentTarget.src =
+                              "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png";
+                          }}
+                        />
+                      </Collaborator>
+                    );
+                  }
+                )}
             </Collaborators>
-            {/* The users can only join a project if it is still not finished */}
+            {/* The users can only join a project if it is still not completed */}
             {progress !== 3 && (
               <>
                 <JoinButton onClick={handleOnclick}>Join our team</JoinButton>
@@ -239,11 +250,10 @@ const PrivateDetailedProject = ({
             )}
           </Wrapper>
         </TopSection>
-        <br />
         <section>
           <Skills>
             {neededSkills &&
-              neededSkills.map((skill) => {
+              neededSkills.map((skill: string) => {
                 return <Skill>#{skill}</Skill>;
               })}
           </Skills>

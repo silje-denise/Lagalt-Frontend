@@ -1,11 +1,12 @@
 import {
+  faArrowUpRightFromSquare,
   faCircle,
   faCircleUser,
   faPenToSquare,
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import EditProjectForm from "./EditProjectForm.tsx";
@@ -13,12 +14,17 @@ import EditProjectForm from "./EditProjectForm.tsx";
 const Title = styled.div`
   font-weight: bold;
   margin: 10px 0;
+  margin-right: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 650px;
 `;
 const Description = styled.div`
   color: #d7c1ee;
-  margin-bottom: 10px;
   line-height: 1.3;
   max-width: 75ch;
+  margin-bottom: 25px;
 `;
 const StyledProjectListItem = styled.div`
   padding: 25px;
@@ -67,24 +73,16 @@ const Wrapper = styled.div`
 `;
 const Button = styled(Link)`
   all: unset;
-  background-color: #7834bb;
-  border-radius: 20px;
+  font-weight: bold;
   padding: 10px 20px;
   color: white;
   height: fit-content;
-  width: fit-content;
+  cursor: pointer;
 
   &:hover {
-    background-color: #975dd2;
+    color: #975dd2;
+    text-decoration: underline;
   }
-`;
-
-const Details = styled.ul`
-  margin: 30px 0;
-`;
-
-const CollaborationHeader = styled.div`
-  margin-bottom: 20px;
 `;
 
 const Container = styled.div`
@@ -147,6 +145,20 @@ const StyledEditIcon = styled(FontAwesomeIcon)`
   color: rgba(49, 206, 74, 0.8);
 `;
 
+/**
+ * A component for editing project information.
+ *
+ * @component
+ * @param {string} title - The title of the project.
+ * @param {string} fullDescription - The full description of the project.
+ * @param {string} creator - The creator of the project.
+ * @param {string} image - The image representing the creator.
+ * @param {string} id - The unique identifier of the project.
+ * @param {string} githubUrl - The GitHub URL of the project.
+ * @param {number} progress - The progress status of the project (0: Founding, 1: In progress, 2: Stalled, 3: Completed).
+ * @param {Array} collaborators - An array of collaborators for the project.
+ * @returns {JSX.Element} The rendered component for editing project information.
+ */
 const EditProject = ({
   title,
   fullDescription,
@@ -158,8 +170,7 @@ const EditProject = ({
   collaborators,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  //const [isHidden, setIsHidden] = useState(false);
-  const [projects, setProjects] = useState([]);
+  //const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleOnclick = () => {
     if (isOpen) {
@@ -169,31 +180,25 @@ const EditProject = ({
     }
   };
 
-  const testCall = () => {
-    const apiUrl = process.env.REACT_APP_API_URL;
-
-    fetch(`${apiUrl}/api/v1/projects`)
-      .then((response) => response.json())
-      .then((data) => setProjects(data))
-      .catch((error) => console.error("Error fetching projects", error));
-  };
-
+  //TODO: add a DELETE request
   const deleteProject = () => {
     let confirm = window.confirm(
       "Are you sure you want to delete this project? \n This action cannot be undone!"
     );
     if (confirm) {
-      //testCall();
+      //     fetch(`${apiUrl}/api/v1/projects/${id}`, {method: 'DELETE',})
+      //     .then(response => response.json())
+      //     .then(() => setStatus('Delete successful'));
     }
+    // alert(status);
   };
 
   return (
     <Container>
       <section>
         <StyledProjectListItem>
-          <Title>{title}</Title>
-          <Description>{fullDescription}</Description>
-          <Details>
+          <Title>
+            {title}
             {progress === 0 && (
               <div>
                 <FontAwesomeIcon icon={faCircle} color={"#4991de"} /> Founding
@@ -201,7 +206,8 @@ const EditProject = ({
             )}
             {progress === 1 && (
               <div>
-                <FontAwesomeIcon icon={faCircle} color={"#F2B84B"} /> In progress
+                <FontAwesomeIcon icon={faCircle} color={"#F2B84B"} /> In
+                progress
               </div>
             )}
             {progress === 2 && (
@@ -209,14 +215,13 @@ const EditProject = ({
                 <FontAwesomeIcon icon={faCircle} color={"#F28D52"} /> Stalled
               </div>
             )}
-               {progress === 3 && (
+            {progress === 3 && (
               <div>
-                <FontAwesomeIcon icon={faCircle} color={"67d149"} /> Completed
+                <FontAwesomeIcon icon={faCircle} color={"#67d149"} /> Completed
               </div>
             )}
-          </Details>
-
-          {/* <CollaborationHeader>Collaborators:</CollaborationHeader> */}
+          </Title>
+          <Description>{fullDescription}</Description>
           <Wrapper>
             <Collaborators>
               <Collaborator>
@@ -236,23 +241,26 @@ const EditProject = ({
               </Collaborator>
 
               {collaborators &&
-                collaborators.map((collaborator) => {
-                  return (
-                    <Collaborator>
-                      <Image
-                        src={collaborator.imageUrl}
-                        alt={`Picture of ${collaborator.username}`}
-                        onError={(e) => {
-                          e.currentTarget.src =
-                            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png";
-                        }}
-                      />
-                      {collaborator.username}
-                    </Collaborator>
-                  );
-                })}
+                collaborators.map(
+                  (collaborator: { imageUrl: string; username: string }) => {
+                    return (
+                      <Collaborator>
+                        <Image
+                          src={collaborator.imageUrl}
+                          alt={`Picture of ${collaborator.username}`}
+                          onError={(e) => {
+                            e.currentTarget.src =
+                              "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png";
+                          }}
+                        />
+                      </Collaborator>
+                    );
+                  }
+                )}
             </Collaborators>
-            <Button to={githubUrl}>Go to Github</Button>
+            <Button to={githubUrl}>
+              Go to Github <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+            </Button>
           </Wrapper>
         </StyledProjectListItem>
       </section>
@@ -268,8 +276,8 @@ const EditProject = ({
         isOpen={isOpen}
         title={title}
         fullDescription={fullDescription}
-        creator={creator}
-        githubUrl={githubUrl}
+        progress={progress}
+        id={id}
       />
     </Container>
   );

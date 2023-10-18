@@ -18,7 +18,6 @@ const StyledProjectListItem = styled.div`
   width: 100%;
 `;
 
-
 const Wrapper = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -37,6 +36,15 @@ const Button = styled.button`
   }
 `;
 
+/**
+ * A component representing a single project item.
+ *
+ * @component
+ * @param {string} title - The title of the project.
+ * @param {string} shortDescription - A short description of the project.
+ * @param {number} id - The unique identifier of the project.
+ * @returns {JSX.Element} The rendered project list item.
+ */
 const ProjectListItem = ({ title, shortDescription, id }) => {
   const navigate = useNavigate();
 
@@ -45,7 +53,6 @@ const ProjectListItem = ({ title, shortDescription, id }) => {
       <Title>{title}</Title>
       <Description>{shortDescription}</Description>
       <Wrapper>
-     
         <Button onClick={() => navigate(`/projectDetails/${id}`)}>
           View project
         </Button>

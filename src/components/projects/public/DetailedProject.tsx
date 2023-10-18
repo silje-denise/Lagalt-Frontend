@@ -3,20 +3,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import keycloak from "../../../keycloak";
 
 const Title = styled.div`
   font-weight: bold;
   margin: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 const Description = styled.div`
   color: #d7c1ee;
-  margin-bottom: 10px;
+  margin-bottom: 25px;
   line-height: 1.3;
   max-width: 75ch;
 `;
 const StyledProjectListItem = styled.div`
-  padding: 25px;
+  overflow: hidden;
   border-radius: 20px;
   background-color: #28113e;
   display: flex;
@@ -71,12 +73,30 @@ const Button = styled(Link)`
   }
 `;
 
-const Details = styled.ul`
-  margin: 30px 0;
+const TopSection = styled.section`
+  padding: 25px 25px 0 25px;
+  margin-bottom: 25px;
 `;
 
-const CollaborationHeader = styled.div`
-  margin-bottom: 20px;
+const Skills = styled.div`
+  background-color: #481f70;
+  gap: 5px;
+  padding: 25px;
+  display: flex;
+`;
+
+const Skill = styled.div`
+  background-color: #481f70;
+  color: #a673d8;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-transform: capitalize;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: default;
+  border: 2px solid #a673d8;
+  font-weight: bolder;
 `;
 
 const Container = styled.div`
@@ -89,6 +109,21 @@ const Container = styled.div`
   }
 `;
 
+/**
+ * A component displaying detailed project information.
+ *
+ * @component
+ * @param {string} title - The title of the project.
+ * @param {string} fullDescription - The full description of the project.
+ * @param {string} creator - The creator of the project.
+ * @param {string} image - The image representing the creator.
+ * @param {string} id - The unique identifier of the project.
+ * @param {string} githubUrl - The GitHub URL of the project.
+ * @param {number} progress - The progress status of the project (0: Founding, 1: In progress, 2: Stalled, 3: Completed).
+ * @param {Array} collaborators - An array of collaborators for the project.
+ * @param {Array} neededSkills - An array of skills needed for the project.
+ * @returns {JSX.Element} The rendered detailed project information.
+ */
 const DetailedProject = ({
   title,
   fullDescription,
@@ -98,13 +133,26 @@ const DetailedProject = ({
   githubUrl,
   progress,
   collaborators,
+  neededSkills,
+// }:{
+//   title: string;
+//   fullDescription: string;
+//   creator: string;
+//   image: string;
+//   id: number;
+//   githubUrl: string,
+//   progress: number;
+//   collaborators: any[];
+//   neededSkills: string[];
 }) => {
+
+  console.log(typeof(neededSkills));
   return (
     <Container>
       <StyledProjectListItem>
-        <Title>{title}</Title>
-        <Description>{fullDescription}</Description>
-        <Details>
+        <TopSection>
+          <Title>
+            {title}
             {progress === 0 && (
               <div>
                 <FontAwesomeIcon icon={faCircle} color={"#4991de"} /> Founding
@@ -112,7 +160,8 @@ const DetailedProject = ({
             )}
             {progress === 1 && (
               <div>
-                <FontAwesomeIcon icon={faCircle} color={"#F2B84B"} /> In progress
+                <FontAwesomeIcon icon={faCircle} color={"#F2B84B"} /> In
+                progress
               </div>
             )}
             {progress === 2 && (
@@ -120,54 +169,57 @@ const DetailedProject = ({
                 <FontAwesomeIcon icon={faCircle} color={"#F28D52"} /> Stalled
               </div>
             )}
-               {progress === 3 && (
+            {progress === 3 && (
               <div>
                 <FontAwesomeIcon icon={faCircle} color={"#67d149"} /> Completed
               </div>
             )}
-          </Details>
+          </Title>
+          <Description>{fullDescription}</Description>
+          <Wrapper>
+            <Collaborators>
+              <Collaborator>
+                {image ? (
+                  <Image
+                    src={image}
+                    alt={`Picture of ${creator}`}
+                    onError={(e) =>
+                      (e.currentTarget.src =
+                        "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png")
+                    }
+                  />
+                ) : (
+                  <FontAwesomeIcon icon={faCircleUser} color={"white"} />
+                )}
+                {creator}⭐
+              </Collaborator>
 
-        {/* <CollaborationHeader>Collaborators:</CollaborationHeader> */}
-        <Wrapper>
-          <Collaborators>
-            <Collaborator>
-              {image ? (
-                <Image
-                  src={image}
-                  alt={`Picture of ${creator}`}
-                  onError={(e) =>
-                    (e.currentTarget.src =
-                      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png")
-                  }
-                />
-              ) : (
-                <FontAwesomeIcon icon={faCircleUser} color={"white"} />
-              )}
-              {creator}⭐
-            </Collaborator>
-
-            {collaborators &&
-              collaborators.map((collaborator) => {
-                return (
-                  <Collaborator>
-                    <Image
-                      src={collaborator.imageUrl}
-                      alt={`Picture of ${collaborator.username}`}
-                      onError={(e) =>
-                        (e.currentTarget.src =
-                          "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png")
-                      }
-                    />
-                    {collaborator.username}
-                  </Collaborator>
-                );
+              {collaborators &&
+                collaborators.map((collaborator: {imageUrl: string, username: string}) => {
+                  return (
+                    <Collaborator>
+                      <Image
+                        src={collaborator.imageUrl}
+                        alt={`Picture of ${collaborator.username}`}
+                        onError={(e) =>
+                          (e.currentTarget.src =
+                            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png")
+                        }
+                      />
+                    </Collaborator>
+                  );
+                })}
+            </Collaborators>
+          </Wrapper>
+        </TopSection>
+        <section>
+          <Skills>
+            {neededSkills &&
+              neededSkills.map((skill: string) => {
+                return <Skill>#{skill}</Skill>;
               })}
-          </Collaborators>
-
-          {/* {keycloak.authenticated && (
-            <Button to={githubUrl}>Go to Github</Button>
-          )} */}
-        </Wrapper>
+          </Skills>
+        </section>
       </StyledProjectListItem>
     </Container>
   );

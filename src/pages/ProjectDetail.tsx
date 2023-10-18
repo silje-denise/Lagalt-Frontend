@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import keycloak from "../keycloak.js";
 import PrivateDetailedProject from "../components/projects/private/PrivateDetailedProject.tsx";
+import EditProject from "../components/projects/admin/EditProject.tsx";
 
 const Wrapper = styled.div`
   display: flex;
@@ -14,8 +15,6 @@ const Wrapper = styled.div`
   overflow: hidden;
   padding: 20px 0;
 `;
-
-const Project = styled.div``;
 
 const Button = styled.button`
   all: unset;
@@ -38,32 +37,86 @@ const Button = styled.button`
   }
 `;
 
+//Type definition for a project object. 
+type Project = {
+  id: number;
+  title: string;
+  fullDescription: string;
+  creator: {
+    username: string;
+    imageUrl: string;
+  };
+  progress: number;
+  githubUrl: string;
+  collaborators: {
+    username: string;
+    imageUrl: string;
+  }[];
+  neededSkills: string[];
+};
+
+/**
+ * ProjectDetail component displays project details based on user authentication.
+ *
+ * @component
+ * @return {JSX.Element} ProjectDetail component
+ */
 const ProjectDetail = () => {
+  // Extract the 'id' parameter from the URL
   const { id } = useParams();
-  const [project, setProject] = useState(null);
+  // State to hold project data, initialized as null
+  const [project, setProject] = useState<Project | null>(null);
+  // Hook for programmatic navigation
   const navigate = useNavigate();
 
   const apiUrl = process.env.REACT_APP_API_URL;
+  let username = "";
+  if (keycloak.tokenParsed) {
+    username = `${keycloak.tokenParsed.preferred_username}`;
+  }
 
-  //Get data about the selected project from API
+  /**
+   * Fetch data about the selected project from the API.
+   *
+   * @function
+   * @param {string} apiUrl - The API URL to fetch project data.
+   * @param {number} id - The unique project ID.
+   * @throws {Error} Error message in case of a fetch error.
+   */
   useEffect(() => {
     fetch(`${apiUrl}/api/v1/projects/${id}/a`)
       .then((response) => response.json())
-      .then((data) => setProject(data))
+      .then((data: Project) => setProject(data))
       .catch((error) => console.error("Error fetching project data: ", error));
   }, [apiUrl, id]);
 
   return (
-    <>
+    <main>
       <Wrapper>
         <Button onClick={() => navigate("/")}>
           <FontAwesomeIcon icon={faChevronLeft} />
         </Button>
-        <Project>
-          {/*Add logic for when a user can have admin privileges */}
+        <div>
+          {/* Conditional rendering based on user authentication */}
           {keycloak.authenticated ? (
             <>
-              {project ? (
+              {project && username === project.creator.username ? (
+                // Display EditProject component for admin users (users who are also the creator of the project)
+                <EditProject
+                  title={project.title}
+                  fullDescription={project.fullDescription}
+                  id={id}
+                  githubUrl={project.githubUrl}
+                  creator={project.creator.username}
+                  image={project.creator.imageUrl}
+                  progress={project.progress}
+                  collaborators={project.collaborators}
+                />
+              ) : (
+                <></>
+              )}
+              {project && username !== project.creator.username ? (
+                // Display PrivateDetailedProject for non-admin users (logged-in users who are not creators of the project)
                 <PrivateDetailedProject
                   title={project.title}
                   fullDescription={project.fullDescription}
@@ -76,12 +129,13 @@ const ProjectDetail = () => {
                   neededSkills={project.neededSkills}
                 />
               ) : (
-                <div>Loading project details...</div>
+                <></>
               )}
             </>
           ) : (
             <>
               {project ? (
+                // Display DetailedProject for unauthenticated users
                 <DetailedProject
                   title={project.title}
                   fullDescription={project.fullDescription}
@@ -91,15 +145,16 @@ const ProjectDetail = () => {
                   image={project.creator.imageUrl}
                   progress={project.progress}
                   collaborators={project.collaborators}
+                  neededSkills={project.neededSkills}
                 />
               ) : (
-                <div>Loading project details...</div>
+                <></>
               )}
             </>
           )}
-        </Project>
+        </div>
       </Wrapper>
-    </>
+    </main>
   );
 };
 
