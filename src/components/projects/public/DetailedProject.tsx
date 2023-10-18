@@ -134,7 +134,19 @@ const DetailedProject = ({
   progress,
   collaborators,
   neededSkills,
+// }:{
+//   title: string;
+//   fullDescription: string;
+//   creator: string;
+//   image: string;
+//   id: number;
+//   githubUrl: string,
+//   progress: number;
+//   collaborators: any[];
+//   neededSkills: string[];
 }) => {
+
+  console.log(typeof(neededSkills));
   return (
     <Container>
       <StyledProjectListItem>

@@ -16,8 +16,6 @@ const Wrapper = styled.div`
   padding: 20px 0;
 `;
 
-const Project = styled.div``;
-
 const Button = styled.button`
   all: unset;
   background-color: #7834bb;
@@ -39,25 +37,58 @@ const Button = styled.button`
   }
 `;
 
+//Type definition for a project object. 
+type Project = {
+  id: number;
+  title: string;
+  fullDescription: string;
+  creator: {
+    username: string;
+    imageUrl: string;
+  };
+  progress: number;
+  githubUrl: string;
+  collaborators: {
+    username: string;
+    imageUrl: string;
+  }[];
+  neededSkills: string[];
+};
+
+/**
+ * ProjectDetail component displays project details based on user authentication.
+ *
+ * @component
+ * @return {JSX.Element} ProjectDetail component
+ */
 const ProjectDetail = () => {
+  // Extract the 'id' parameter from the URL
   const { id } = useParams();
-  const [project, setProject] = useState(null);
+  // State to hold project data, initialized as null
+  const [project, setProject] = useState<Project | null>(null);
+  // Hook for programmatic navigation
   const navigate = useNavigate();
 
   const apiUrl = process.env.REACT_APP_API_URL;
-  let username = ""
-  if(keycloak.tokenParsed){
-      username = `${keycloak.tokenParsed.preferred_username}`
+  let username = "";
+  if (keycloak.tokenParsed) {
+    username = `${keycloak.tokenParsed.preferred_username}`;
   }
 
-  //Get data about the selected project from API, using the ID parameter
+  /**
+   * Fetch data about the selected project from the API.
+   *
+   * @function
+   * @param {string} apiUrl - The API URL to fetch project data.
+   * @param {number} id - The unique project ID.
+   * @throws {Error} Error message in case of a fetch error.
+   */
   useEffect(() => {
     fetch(`${apiUrl}/api/v1/projects/${id}/a`)
       .then((response) => response.json())
-      .then((data) => setProject(data))
+      .then((data: Project) => setProject(data))
       .catch((error) => console.error("Error fetching project data: ", error));
   }, [apiUrl, id]);
-
 
   return (
     <main>
@@ -65,13 +96,12 @@ const ProjectDetail = () => {
         <Button onClick={() => navigate("/")}>
           <FontAwesomeIcon icon={faChevronLeft} />
         </Button>
-        <Project>
-          
-          {/*Add logic for when a user can have admin privileges */}
-          {keycloak.authenticated ?( 
-            
+        <div>
+          {/* Conditional rendering based on user authentication */}
+          {keycloak.authenticated ? (
             <>
               {project && username === project.creator.username ? (
+                // Display EditProject component for admin users (users who are also the creator of the project)
                 <EditProject
                   title={project.title}
                   fullDescription={project.fullDescription}
@@ -81,12 +111,12 @@ const ProjectDetail = () => {
                   image={project.creator.imageUrl}
                   progress={project.progress}
                   collaborators={project.collaborators}
-                  
                 />
               ) : (
                 <></>
               )}
               {project && username !== project.creator.username ? (
+                // Display PrivateDetailedProject for non-admin users (logged-in users who are not creators of the project)
                 <PrivateDetailedProject
                   title={project.title}
                   fullDescription={project.fullDescription}
@@ -105,23 +135,24 @@ const ProjectDetail = () => {
           ) : (
             <>
               {project ? (
+                // Display DetailedProject for unauthenticated users
                 <DetailedProject
-                    title={project.title}
-                    fullDescription={project.fullDescription}
-                    id={id}
-                    githubUrl={project.githubUrl}
-                    creator={project.creator.username}
-                    image={project.creator.imageUrl}
-                    progress={project.progress}
-                    collaborators={project.collaborators} 
-                    neededSkills={project.skills}                
-                    />
+                  title={project.title}
+                  fullDescription={project.fullDescription}
+                  id={id}
+                  githubUrl={project.githubUrl}
+                  creator={project.creator.username}
+                  image={project.creator.imageUrl}
+                  progress={project.progress}
+                  collaborators={project.collaborators}
+                  neededSkills={project.neededSkills}
+                />
               ) : (
                 <></>
               )}
             </>
           )}
-        </Project>
+        </div>
       </Wrapper>
     </main>
   );
