@@ -9,7 +9,8 @@ const ProfileProjectsWrapper = styled.div`
     position: relative;
     bottom: 480px;
     left: 45px;
-    width: 800px;
+    width: 1080px;
+    padding: 20px;
     background-color: #28113e;
 
     h3{

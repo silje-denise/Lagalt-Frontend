@@ -9,8 +9,6 @@ import './index.css';
 import Navbar from './components/common/Navbar.tsx';
 import ProjectDetail from './pages/ProjectDetail.tsx';
 import KeycloakRoute from './routes/KeycloakRoute';
-import Footer from './components/common/Footer.tsx';
-import TestPage from './pages/TestPage.tsx';
 
 
 export default function App(){
@@ -30,9 +28,8 @@ export default function App(){
         />
         <Route path="/projectDetails/:id" element={<ProjectDetail/>}/>
         <Route path="/users/:username" element={<ProfilePage/>}/>
-        <Route path="/test" element={<TestPage/>}/>
+        
       </Routes>
-      <Footer/>
     </BrowserRouter>
   );
 }

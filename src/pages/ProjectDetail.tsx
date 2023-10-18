@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate, useParams, useLocation } from "react-router";
 import styled from "styled-components";
 import DetailedProject from "../components/projects/public/DetailedProject.tsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -44,6 +44,10 @@ const ProjectDetail = () => {
   const [project, setProject] = useState(null);
   const navigate = useNavigate();
 
+  const navigateBack = () => {
+    navigate(-1);
+  };
+
   const apiUrl = process.env.REACT_APP_API_URL;
   let username = ""
   if(keycloak.tokenParsed){
@@ -63,7 +67,7 @@ const ProjectDetail = () => {
     
     <>
       <Wrapper>
-        <Button onClick={() => navigate("/")}>
+        <Button onClick={navigateBack}>
           <FontAwesomeIcon icon={faChevronLeft} />
         </Button>
         <Project>

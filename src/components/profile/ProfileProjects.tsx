@@ -8,7 +8,7 @@ const ProfileProjectWrapper = styled.ul`
     border-radius: 20px;
     list-style: none;
     position: relative;
-    bottom: 480px;
+    bottom: 535px;
     left: 400px;
     width: 1000px;
     //background-color: black;
