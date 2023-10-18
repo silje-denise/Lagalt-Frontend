@@ -3,6 +3,25 @@ import styled from 'styled-components';
 import keycloak from "../../keycloak";
 
 
+const ProfileProjectsWrapper = styled.div`
+    border-radius: 20px;
+    list-style: none;
+    position: relative;
+    bottom: 480px;
+    left: 45px;
+    width: 800px;
+    background-color: #28113e;
+
+    h3{
+        color: #e7daf5;
+    }
+
+    li{
+        line-height: 35px;
+    }
+`;
+
+
 const Applications = () => {
     const [applications, setApplications] = useState([]);
   
@@ -23,8 +42,7 @@ const Applications = () => {
     }, []);
     
     return (
-        <div>
-            <h1>Applications</h1>
+        <ProfileProjectsWrapper>
             <ul>
                 {applications.map(a => (
                     <li>
@@ -34,7 +52,7 @@ const Applications = () => {
                     </li>
                 ))}
             </ul>
-        </div>
+        </ProfileProjectsWrapper>
     );
 
 

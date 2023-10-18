@@ -69,10 +69,10 @@ const ProjectDetail = () => {
         <Project>
           
           {/*Add logic for when a user can have admin privileges */}
-          {keycloak.authenticated && project && username === project.creator.username ?( 
+          {keycloak.authenticated ?( 
             
             <>
-              {project ? (
+              {project && username === project.creator.username ? (
                 <EditProject
                   title={project.title}
                   fullDescription={project.fullDescription}
@@ -85,9 +85,9 @@ const ProjectDetail = () => {
                   
                 />
               ) : (
-                <div>Loading project details...</div>
+                <></>
               )}
-              {/* {project ? (
+              {project && username !== project.creator.username ? (
                 <PrivateDetailedProject
                   title={project.title}
                   fullDescription={project.fullDescription}
@@ -100,8 +100,8 @@ const ProjectDetail = () => {
                   neededSkills={project.neededSkills}
                 />
               ) : (
-                <div>Loading project details...</div>
-              )} */}
+                <></>
+              )}
             </>
           ) : (
             <>
@@ -118,7 +118,7 @@ const ProjectDetail = () => {
                     neededSkills={project.skills}                
                     />
               ) : (
-                <div>Loading project details...</div>
+                <></>
               )}
             </>
           )}
