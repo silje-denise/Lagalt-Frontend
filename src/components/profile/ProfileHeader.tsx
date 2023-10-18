@@ -7,11 +7,9 @@ import keycloak from "../../keycloak";
 
 const ProfileInfoWrapper = styled.div`
     background-color: #28113e;
-    width: 300px;
-    height: 100px;
-    padding: 20px;
     border-radius: 20px;
-    list-style: none;
+    width: 350px;
+    height: 130px;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
@@ -37,7 +35,7 @@ const ProfileInfo = styled.div`
     position: relative;
     font-size: 16px;
     top: 30px;
-    right: 147px;
+    right: 160px;
 `;
 
 const Image = styled.img`

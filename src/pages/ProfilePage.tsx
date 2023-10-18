@@ -6,20 +6,16 @@ import AdminToggle from "./../components/profile/AdminToggle.tsx";
 import styled from "styled-components";
 import keycloak from "./../keycloak";
 import ProjectListItem from "../components/projects/public/ProjectListItem.tsx";
+import Applications from "../components/profile/Applications.tsx";
 
+const ProfilePage = () => (
+    <div>
+        <UserInfo />
+        <Skills />
+        {/* <AdminToggle/> */}
+        <Projects />
+        <Applications />
 
-// styled AdminHeader = styled
-
-
-const ProfilePage = () => {
-    return(
-        <div>
-            <UserInfo/>
-            <Skills/>
-            <AdminToggle/>
-            <Projects/>
-            
-        </div>
-    );
-};
+    </div>
+);
 export default ProfilePage;

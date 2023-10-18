@@ -45,6 +45,10 @@ const ProjectDetail = () => {
   const navigate = useNavigate();
 
   const apiUrl = process.env.REACT_APP_API_URL;
+  let username = ""
+  if(keycloak.tokenParsed){
+      username = `${keycloak.tokenParsed.preferred_username}`
+  }
 
   //Get data about the selected project from API, using the ID parameter
   useEffect(() => {
@@ -54,6 +58,7 @@ const ProjectDetail = () => {
       .catch((error) => console.error("Error fetching project data: ", error));
   }, [apiUrl, id]);
 
+
   return (
     <main>
       <Wrapper>
@@ -61,10 +66,12 @@ const ProjectDetail = () => {
           <FontAwesomeIcon icon={faChevronLeft} />
         </Button>
         <Project>
+          
           {/*Add logic for when a user can have admin privileges */}
-          {keycloak.authenticated ? (
+          {keycloak.authenticated ?( 
+            
             <>
-              {project ? (
+              {project && username === project.creator.username ? (
                 <EditProject
                   title={project.title}
                   fullDescription={project.fullDescription}
@@ -77,9 +84,9 @@ const ProjectDetail = () => {
                   
                 />
               ) : (
-                <div>Loading project details...</div>
+                <></>
               )}
-              {/* {project ? (
+              {project && username !== project.creator.username ? (
                 <PrivateDetailedProject
                   title={project.title}
                   fullDescription={project.fullDescription}
@@ -92,8 +99,8 @@ const ProjectDetail = () => {
                   neededSkills={project.neededSkills}
                 />
               ) : (
-                <div>Loading project details...</div>
-              )} */}
+                <></>
+              )}
             </>
           ) : (
             <>
@@ -110,7 +117,7 @@ const ProjectDetail = () => {
                     neededSkills={project.skills}                
                     />
               ) : (
-                <div>Loading project details...</div>
+                <></>
               )}
             </>
           )}
