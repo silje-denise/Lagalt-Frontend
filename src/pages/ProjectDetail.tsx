@@ -46,7 +46,7 @@ const ProjectDetail = () => {
 
   const apiUrl = process.env.REACT_APP_API_URL;
 
-  //Get data about the selected project from API
+  //Get data about the selected project from API, using the ID parameter
   useEffect(() => {
     fetch(`${apiUrl}/api/v1/projects/${id}/a`)
       .then((response) => response.json())
@@ -55,7 +55,7 @@ const ProjectDetail = () => {
   }, [apiUrl, id]);
 
   return (
-    <>
+    <main>
       <Wrapper>
         <Button onClick={() => navigate("/")}>
           <FontAwesomeIcon icon={faChevronLeft} />
@@ -116,7 +116,7 @@ const ProjectDetail = () => {
           )}
         </Project>
       </Wrapper>
-    </>
+    </main>
   );
 };
 

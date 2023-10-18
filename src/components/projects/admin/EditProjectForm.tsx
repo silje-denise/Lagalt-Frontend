@@ -17,13 +17,6 @@ const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  input {
-    height: 30px;
-    border-radius: 5px;
-    border: none;
-    margin-top: 5px;
-    padding-left: 10px;
-  }
   textarea {
     min-height: 60px;
     border-radius: 5px;
@@ -69,14 +62,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-const EditProjectForm = ({
-  isOpen,
-  title,
-  fullDescription,
-  progress,
-  id,
-}) => {
-
+const EditProjectForm = ({ isOpen, title, fullDescription, progress, id }) => {
   const apiUrl = process.env.REACT_APP_API_URL;
   const [selected, setSelected] = useState("");
   const [description, setDescription] = useState("");
@@ -85,21 +71,28 @@ const EditProjectForm = ({
     window.location.reload();
   };
 
+  /**
+   * Handles form submission for updating project information.
+   * @param {Event} e - The form submission event.
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
     e.persist();
 
+    // Create a FormData object from the form
     const formData = new FormData(form);
     formData.append("Id", id);
     formData.append("Progress", selected);
     formData.append("FullDescription", description);
 
+    // Define the request options
     const requestOptions = {
       method: "PUT",
       body: formData,
     };
 
+    // Send a PUT request to update the project information
     fetch(`${apiUrl}/api/v1/projects/${id}`, requestOptions)
       .then((response) => {
         if (!response.ok) {
@@ -116,12 +109,13 @@ const EditProjectForm = ({
         console.error("There was a problem with the fetch operation:", error);
       });
 
-      closeDialog();
+    // Close the dialog
+    closeDialog();
   };
 
   return (
     <>
-      {isOpen &&(
+      {isOpen && (
         <StyledDialog>
           <Header>Editing "{title}"</Header>
           <StyledForm method="PUT" onSubmit={handleSubmit}>
@@ -148,11 +142,10 @@ const EditProjectForm = ({
               </select>
             </InputWrapper>
             <ButtonContainer>
-             
+              <button onClick={closeDialog}>Cancel</button>
               <button type="submit">Submit change</button>
             </ButtonContainer>
           </StyledForm>
-          <button onClick={closeDialog}>Cancel</button>
         </StyledDialog>
       )}
     </>

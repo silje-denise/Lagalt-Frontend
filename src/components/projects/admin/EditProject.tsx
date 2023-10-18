@@ -6,7 +6,7 @@ import {
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import EditProjectForm from "./EditProjectForm.tsx";
@@ -145,6 +145,20 @@ const StyledEditIcon = styled(FontAwesomeIcon)`
   color: rgba(49, 206, 74, 0.8);
 `;
 
+/**
+ * A component for editing project information.
+ *
+ * @component
+ * @param {string} title - The title of the project.
+ * @param {string} fullDescription - The full description of the project.
+ * @param {string} creator - The creator of the project.
+ * @param {string} image - The image representing the creator.
+ * @param {string} id - The unique identifier of the project.
+ * @param {string} githubUrl - The GitHub URL of the project.
+ * @param {number} progress - The progress status of the project (0: Founding, 1: In progress, 2: Stalled, 3: Completed).
+ * @param {Array} collaborators - An array of collaborators for the project.
+ * @returns {JSX.Element} The rendered component for editing project information.
+ */
 const EditProject = ({
   title,
   fullDescription,
@@ -156,7 +170,7 @@ const EditProject = ({
   collaborators,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const apiUrl = process.env.REACT_APP_API_URL;
+  //const apiUrl = process.env.REACT_APP_API_URL;
 
   const handleOnclick = () => {
     if (isOpen) {
@@ -166,6 +180,7 @@ const EditProject = ({
     }
   };
 
+  //TODO: add a DELETE request
   const deleteProject = () => {
     let confirm = window.confirm(
       "Are you sure you want to delete this project? \n This action cannot be undone!"
@@ -177,8 +192,6 @@ const EditProject = ({
     }
     // alert(status);
   };
-
-  console.log("progress editproject: " + progress);
 
   return (
     <Container>
@@ -209,7 +222,6 @@ const EditProject = ({
             )}
           </Title>
           <Description>{fullDescription}</Description>
-
           <Wrapper>
             <Collaborators>
               <Collaborator>
@@ -229,20 +241,22 @@ const EditProject = ({
               </Collaborator>
 
               {collaborators &&
-                collaborators.map((collaborator) => {
-                  return (
-                    <Collaborator>
-                      <Image
-                        src={collaborator.imageUrl}
-                        alt={`Picture of ${collaborator.username}`}
-                        onError={(e) => {
-                          e.currentTarget.src =
-                            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png";
-                        }}
-                      />
-                    </Collaborator>
-                  );
-                })}
+                collaborators.map(
+                  (collaborator: { imageUrl: string; username: string }) => {
+                    return (
+                      <Collaborator>
+                        <Image
+                          src={collaborator.imageUrl}
+                          alt={`Picture of ${collaborator.username}`}
+                          onError={(e) => {
+                            e.currentTarget.src =
+                              "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png";
+                          }}
+                        />
+                      </Collaborator>
+                    );
+                  }
+                )}
             </Collaborators>
             <Button to={githubUrl}>
               Go to Github <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
