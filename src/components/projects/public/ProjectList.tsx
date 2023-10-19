@@ -15,16 +15,24 @@ const StyledProjectList = styled.div`
   }
 `;
 
+/**
+ * A component to render a list of projects.
+ *
+ * @component
+ * @param {object} projects - An object containing an array of project data.
+ * @param {Array} projects.projects - An array of project objects.
+ * @returns {JSX.Element} The rendered project list.
+ */
 const ProjectList = (projects) => {
   return (
     <StyledProjectList>
-      {projects.projects.map((p) => {
-        if (p.title && p.shortDescription) {
+      {projects.projects.map((project:{title: string, shortDescription: string, id: number}) => {
+        if (project.title && project.shortDescription) {
           return (
             <ProjectListItem
-              title={p.title}
-              shortDescription={p.shortDescription}
-              id={p.id}
+              title={project.title}
+              shortDescription={project.shortDescription}
+              id={project.id}
             />
           );
         }

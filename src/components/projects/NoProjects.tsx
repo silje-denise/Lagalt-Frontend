@@ -11,6 +11,7 @@ const Image = styled.img`
   filter: invert(1);
 `;
 
+//A simple component to display a message when no projects are found
 const NoProject = () => {
   return (
     <Container>

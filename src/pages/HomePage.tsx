@@ -41,13 +41,26 @@ const MenuItem = styled.option`
 `;
 
 const HomePage = () => {
+  //State management
   const [categories, setCategories] = useState([]);
   const [projects, setProjects] = useState([]);
+  const [selectedMenuItem, setSelectedMenuItem] = useState(0);
+
+  //Set an empty array of objects, which will be updated once the user has selected a category
+  const projectsToDisplay = [{}];
 
   //Get apiUrl from the .env file
   const apiUrl = process.env.REACT_APP_API_URL;
 
-  //Get all categories from API
+  /**
+ * Fetches all categories from the API.
+ * This effect fetches the list of categories from the API using the provided
+ * `apiUrl`. It then updates the state with the retrieved data or logs an error
+ * if the request fails.
+ *
+ * @effect
+ * @param {string} apiUrl - The URL of the API endpoint to fetch categories from.
+ */
   useEffect(() => {
     fetch(`${apiUrl}/api/v1/categories`)
       .then((response) => response.json())
@@ -55,7 +68,15 @@ const HomePage = () => {
       .catch((error) => console.error("Error fetching categories", error));
   }, [apiUrl]);
 
-  //Get all projects from API
+  /**
+ * Fetches all projects from the API.
+ * This effect fetches the list of projects from the API using the provided
+ * `apiUrl`. It then updates the state with the retrieved project data or logs an
+ * error if the request fails.
+ *
+ * @effect
+ * @param {string} apiUrl - The URL of the API endpoint to fetch projects from.
+ */
   useEffect(() => {
     fetch(`${apiUrl}/api/v1/projects`)
       .then((response) => response.json())
@@ -63,20 +84,18 @@ const HomePage = () => {
       .catch((error) => console.error("Error fetching projects", error));
   }, [apiUrl]);
 
-  const [selectedMenuItem, setSelectedMenuItem] = useState(0);
-
+  let index;
+  /*This function controls which category was selected and updates styling based on the state
+  This is also used to control which projects should be displayed at all times*/
   const handleClick = (index) => {
     setSelectedMenuItem(index);
-    console.log("index" + index);
-    console.log("selected index" + selectedMenuItem);
   };
 
-  const projectsToDisplay = [{}];
-  let index;
-
   return (
+    <main>
     <Wrapper>
       <CategoryMenu>
+        {/* Display all projects by default */}
         <MenuItem
           onClick={() => handleClick(0)}
           selected={selectedMenuItem === 0}
@@ -84,14 +103,14 @@ const HomePage = () => {
           All projects
         </MenuItem>
         {categories &&
-          categories.map((c) => {
+          categories.map((category: { id: number; name: string }) => {
             return (
               <MenuItem
-                onClick={() => handleClick(c.id)}
-                selected={selectedMenuItem === c.id}
+                onClick={() => handleClick(category.id)}
+                selected={selectedMenuItem === category.id}
                 key={index}
               >
-                {c.name}
+                {category.name}
               </MenuItem>
             );
           })}
@@ -102,11 +121,11 @@ const HomePage = () => {
         <ProjectList projects={projects} />
       ) : (
         <>
-          {/* Listing out all the projects assosiated with a given category */}
+          {/* Listing out all the projects associated with a given category */}
           {projects &&
-            projects.map((p) => {
-              if (p.category.id === selectedMenuItem) {
-                projectsToDisplay.push(p);
+            projects.map((project: { category: { id: number } }) => {
+              if (project.category.id === selectedMenuItem) {
+                projectsToDisplay.push(project);
                 return <></>;
               }
             })}
@@ -118,6 +137,7 @@ const HomePage = () => {
         </>
       )}
     </Wrapper>
+    </main>
   );
 };
 export default HomePage;
