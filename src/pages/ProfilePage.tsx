@@ -7,15 +7,14 @@ import styled from "styled-components";
 import keycloak from "./../keycloak";
 import ProjectListItem from "../components/projects/public/ProjectListItem.tsx";
 import Applications from "../components/profile/Applications.tsx";
-
 const ProfilePage = () => (
+    
     <div>
         <UserInfo />
         <Skills />
         {/* <AdminToggle/> */}
-        <Projects />
+        <Projects/>
         <Applications />
-
     </div>
 );
 export default ProfilePage;

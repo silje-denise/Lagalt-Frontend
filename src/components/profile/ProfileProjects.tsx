@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import keycloak from "../../keycloak";
-import ProjectListItem from "../projects/public/ProjectListItem.tsx";
 import ProjectList from "../projects/public/ProjectList.tsx";
 
 const ProfileProjectWrapper = styled.ul`
@@ -43,6 +42,7 @@ const Projects = () => {
 
       return (
         <ProfileProjectWrapper>
+            <h3>Projects</h3>
             <ProjectList projects = {projects}/>
         </ProfileProjectWrapper>
       )
