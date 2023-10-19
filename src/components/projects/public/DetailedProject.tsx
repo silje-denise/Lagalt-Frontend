@@ -1,7 +1,6 @@
 import { faCircle, faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Title = styled.div`
@@ -58,18 +57,6 @@ const Wrapper = styled.div`
   @media (max-width: 1025px) {
     flex-direction: column;
     gap: 40px;
-  }
-`;
-const Button = styled(Link)`
-  all: unset;
-  background-color: #7834bb;
-  border-radius: 20px;
-  padding: 10px 20px;
-  color: white;
-  height: fit-content;
-
-  &:hover {
-    background-color: #975dd2;
   }
 `;
 
@@ -134,19 +121,8 @@ const DetailedProject = ({
   progress,
   collaborators,
   neededSkills,
-// }:{
-//   title: string;
-//   fullDescription: string;
-//   creator: string;
-//   image: string;
-//   id: number;
-//   githubUrl: string,
-//   progress: number;
-//   collaborators: any[];
-//   neededSkills: string[];
 }) => {
 
-  console.log(typeof(neededSkills));
   return (
     <Container>
       <StyledProjectListItem>
