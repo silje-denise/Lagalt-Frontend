@@ -1,5 +1,5 @@
 import React from "react";
-import Skills from "./../components/profile/ProfileSkills.tsx";
+import ProfileSkills from "./../components/profile/ProfileSkills.tsx";
 import UserInfo from "../components/profile/UserInfo.tsx";
 import Projects from "./../components/profile/ProfileProjects.tsx";
 import styled from "styled-components";
@@ -30,7 +30,7 @@ const ProfilePage = () => (
       <TopSection>
         <div>
           <UserInfo />
-          <Skills />
+          <ProfileSkills />
         </div>
         <Projects />
       </TopSection>
