@@ -36,3 +36,7 @@ The application is deployed to Vercel, check it out [here](https://lagalt-fronte
 
 ## Security
 Our app uses OpenID connect/SSO for authentication. Our Keycloak service works on both localhost and on Vercel.
+
+## Component tree
+This is the architecture of our frontend solution. The pages are marked in blue, and the components are marked in purple.
+![component tree](./Lagalt_Frontend_ComponentTree.png)
