@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import keycloak from "../../keycloak";
 
 
@@ -17,7 +15,6 @@ const ProfileInfoWrapper = styled.div`
     li {
         text-decoration: none;
         color: #e7daf5;
-        position: relative;
         left: 100px;
         bottom: 45px;
         font-size: 20px;
@@ -27,14 +24,12 @@ const ProfileInfoWrapper = styled.div`
 const ProfileName = styled.div`
     color: #e7daf5;
     font-size: 20px;
-    
+    margin-bottom: 5px;
 `
 
 const ProfileInfo = styled.div`
     color: #e7daf5;
-    position: relative;
     font-size: 16px;
-    top: 30px;
     right: 160px;
 `;
 
@@ -43,6 +38,11 @@ const Image = styled.img`
   height: 50px;
   border-radius: 100%;
 //   border: 2px solid #7834bb;
+`;
+
+const ProfileHeader = styled.h3`
+      margin-top: 35px;
+      margin-left: 10px;
 `;
 
 const UserInfo = () => {
@@ -76,25 +76,24 @@ const UserInfo = () => {
 
     return (
         <ul>
+            <ProfileHeader>Welcome back, {username}!</ProfileHeader>
             <ProfileInfoWrapper>
-            <Image
-                      src={profilePicture}
-                      alt={`Picture of ${username}`}
-                      onError={(e) =>
-                        (e.currentTarget.src =
-                          "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png")
-                      }
-                    />
-            {/* <img src= {profilePicture} alt="Profile Picture"/> */}
-            {/* <ProfileIcon icon={faCircleUser} color={"white"} /> */}
-            <ProfileName>
-            {username}
-            </ProfileName>
-            <ProfileInfo>
-            {userInfo}
-            </ProfileInfo>
-
-
+                <Image
+                        src={profilePicture}
+                        alt={`Picture of ${username}`}
+                        onError={(e) =>
+                            (e.currentTarget.src =
+                            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png")
+                        }
+                        />
+                <div>
+                    <ProfileName>
+                        {username}
+                    </ProfileName>
+                    <ProfileInfo>
+                        {userInfo}
+                    </ProfileInfo>
+                </div>
             </ProfileInfoWrapper>
         </ul>
     );

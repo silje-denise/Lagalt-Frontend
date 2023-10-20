@@ -1,26 +1,21 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import keycloak from "../../keycloak";
-import ProjectListItem from "../projects/public/ProjectListItem.tsx";
 import ProjectList from "../projects/public/ProjectList.tsx";
 
 const ProfileProjectWrapper = styled.ul`
     border-radius: 20px;
     list-style: none;
-    position: relative;
-    bottom: 480px;
-    left: 400px;
-    width: 1000px;
-    //background-color: black;
+    width: 100%;
 
     h3{
         color: #e7daf5;
-    }
-
-    li{
-        line-height: 35px;
+        margin-left: 30px;
     }
 `;
+
+
+
 const Projects = () => {
 
     const [projects, setProjects] = useState<string[]>([]);
@@ -43,6 +38,7 @@ const Projects = () => {
 
       return (
         <ProfileProjectWrapper>
+            <h3>Projects</h3>
             <ProjectList projects = {projects}/>
         </ProfileProjectWrapper>
       )

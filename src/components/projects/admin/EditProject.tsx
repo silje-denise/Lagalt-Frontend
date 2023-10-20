@@ -7,7 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import EditProjectForm from "./EditProjectForm.tsx";
 
@@ -170,7 +170,8 @@ const EditProject = ({
   collaborators,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  //const apiUrl = process.env.REACT_APP_API_URL;
+  const apiUrl = process.env.REACT_APP_API_URL;
+  const navigate = useNavigate();
 
   const handleOnclick = () => {
     if (isOpen) {
@@ -180,17 +181,19 @@ const EditProject = ({
     }
   };
 
-  //TODO: add a DELETE request
   const deleteProject = () => {
+    // Ask for confirmation before deleting the project
     let confirm = window.confirm(
       "Are you sure you want to delete this project? \n This action cannot be undone!"
     );
     if (confirm) {
-      //     fetch(`${apiUrl}/api/v1/projects/${id}`, {method: 'DELETE',})
-      //     .then(response => response.json())
-      //     .then(() => setStatus('Delete successful'));
+      // Send a DELETE request to the API to delete the project
+      fetch(`${apiUrl}/api/v1/projects/${id}`, { method: "DELETE" })
+        .then((response) => response.json())
+        .catch((error) => console.error("Error fetching categories", error));
     }
-    // alert(status);
+    
+    navigate(-1);
   };
 
   return (
