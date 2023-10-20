@@ -121,6 +121,8 @@ const Applications = () => {
         <div>
             <ul>
                 {applications.map(application => (
+                    <>
+                    {applications && <h3>Applications</h3>}
                     <ApplicationWrapper key={application.id}>
                         <div>
                         <User>From: {application.user}</User>
@@ -131,6 +133,7 @@ const Applications = () => {
                             <AcceptButton onClick={() => confirmApplication(application.id)}>Accept <AcceptIcon icon={faCheck}/></AcceptButton>
                         </div>
                     </ApplicationWrapper>
+                    </>
                 ))}
             </ul>
         </div>

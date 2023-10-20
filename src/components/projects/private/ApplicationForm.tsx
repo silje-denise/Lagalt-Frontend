@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import keycloak from "../../../keycloak";
 
 const StyledDialog = styled.div`
   background-color: #481f70;
@@ -43,6 +44,7 @@ const Header = styled.h2`
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
+  margin-top: 10px;
 
   button {
     all: unset;
@@ -60,24 +62,77 @@ const ButtonContainer = styled.div`
     }
   }
 `;
-//TODO: add a POST request to send the form
-const ApplicationForm = ({ isOpen }) => {
-  const x = () => {
-    isOpen = false;
+
+/**
+ * ApplicationForm component to handle collaboration application form.
+ *
+ * @param {boolean} isOpen - Indicates whether the application form dialog is open.
+ * @param {number} id - The unique identifier of the project for which the user is applying.
+ */
+const ApplicationForm = ({ isOpen, id }) => {
+  const apiUrl = process.env.REACT_APP_API_URL;
+  const [content, setContent] = useState("");
+
+  //Get the username
+  let username = "";
+  if (keycloak.tokenParsed) {
+    username = `${keycloak.tokenParsed.preferred_username}`;
+  }
+
+  //POST
+  const sendApplicationForm = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+
+    // Append the application content, user, and project to the form data
+    formData.append("Content", content);
+    formData.append("User", username);
+    formData.append("Project", id);
+
+    const requestOptions = {
+      method: "POST",
+      body: formData,
+    };
+
+      // Send a POST request to submit the application form
+    fetch(`${apiUrl}/api/v1/CollaboratorApplications`, requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .catch((error) => {
+        console.error("There was a problem with the fetch operation:", error);
+      });
+
+    // Close the dialog after submitting the form
+    closeDialog();
   };
+
+  const closeDialog = () => {
+    window.location.reload();
+  };
+
   return (
     <>
       {isOpen && (
         <StyledDialog>
           <Header>Tell us why you want to join our team</Header>
-          <StyledForm>
+          <StyledForm onSubmit={sendApplicationForm}>
             <InputWrapper>
-              <textarea maxLength={3000} placeholder="Start typing..." />
+              <textarea
+                maxLength={3000}
+                placeholder="Start typing..."
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                name="Content"
+              />
             </InputWrapper>
-            <br />
             <ButtonContainer>
-              <button onClick={x}>Cancel</button>
-              <button onClick={x}>Done</button>
+              <button onClick={closeDialog}>Cancel</button>
+              <button type="submit">Send</button>
             </ButtonContainer>
           </StyledForm>
         </StyledDialog>

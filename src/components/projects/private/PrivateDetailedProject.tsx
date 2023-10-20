@@ -161,6 +161,8 @@ const PrivateDetailedProject = ({
 }) => {
   //Handle the dialog box for the application form
   const [isOpen, setIsOpen] = useState(false);
+
+
   const handleOnclick = () => {
     if (isOpen) {
       setIsOpen(false);
@@ -245,7 +247,7 @@ const PrivateDetailedProject = ({
             {progress !== 3 && (
               <>
                 <JoinButton onClick={handleOnclick}>Join our team</JoinButton>
-                <ApplicationForm isOpen={isOpen} />
+                <ApplicationForm isOpen={isOpen} id={id}/>
               </>
             )}
           </Wrapper>
