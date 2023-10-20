@@ -65,9 +65,8 @@ const Navbar = () => {
         <li>
           <Link to="/">Home</Link>
         </li>
-        <li>
-          <Link to={"/profile"}>Profile</Link>
-        </li>
+        {keycloak.authenticated && <Link to="/profile">Profile</Link>}
+
         <li>
           {!keycloak.authenticated && (
             <button onClick={() => keycloak.login()}>Login</button>
