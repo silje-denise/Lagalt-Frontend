@@ -1,5 +1,4 @@
 # Lagalt-Frontend
-## Frontend repo to the Lagalt page
 * The backend solution can be found [here](https://github.com/joakimhansen/Lagalt/)
 * The API documentation can be found [here](https://lagalt-docker.azurewebsites.net/swagger/index.html)
 * Go check out the frontend solution on [Vercel](https://lagalt-frontend-plum.vercel.app/)
@@ -28,7 +27,7 @@ In order to use this app as inteded, you are required to create environment vari
 ```
 5. If you have a terminal running, stop it (using `ctrl + c`) and start it again by using `npm start`
 
-## Development server
+### Development server
 To start the application, run `npm install`, and then `npm start` for a dev server. Navigate to `http://localhost:3000`. The application will automatically reload if you change any of the source files.
 
 ## Deployment
@@ -39,4 +38,5 @@ Our app uses OpenID connect/SSO for authentication. Our Keycloak service works o
 
 ## Component tree
 This is the architecture of our frontend solution. The pages are marked in blue, and the components are marked in purple.
+
 ![component tree](./Lagalt_Frontend_ComponentTree.png)
