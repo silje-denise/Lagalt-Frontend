@@ -5,34 +5,65 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 
-const ProfileProjectsWrapper = styled.ul`
-    border-radius: 20px;
+const ApplicationWrapper = styled.ul`
+    border-radius: 15px;
     list-style: none;
-    position: relative;
-    bottom: 50px;
-    width: 1050px;
-    padding: 40px;
     background-color: #28113e;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: space-evenly;
+    margin-bottom: 15px;
+    padding: 20px;
+    height: auto;
+    width: 77%;
 
     h3{
         color: #111;
     }
 
-    li{
-        line-height: 25px;
+    textarea{
+        color: black;
+        background-color: #ddd;
+        border-radius: 5px;
+        padding: 10px;
+        width: 400px;
+        font-family: helvetica;
+        line-height: 1.5;
     }
 `;
 
+const AcceptButton = styled.button`
+    all: unset;
+    background-color: rgba(49, 206, 74, 0.3);
+    border-radius: 20px;
+    padding: 10px 20px;
+    margin-left: 20px;
+    cursor: pointer;
+    
+    `;
+
+const DeclineButton = styled.button`
+    all: unset;
+    background-color: rgba(217, 76, 76, 0.3);
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+`;
+
 const User = styled.div`
-  margin: 10px 0;
+  margin: 10px;
+  text-transform: capitalize;
+  
 `;
-const Content = styled.div`
-  margin-bottom: 10px;
-  line-height: 1.3;
+
+const DeclineIcon = styled(FontAwesomeIcon)`
+  color: rgba(217, 76, 76, 0.8);
 `;
+
+const AcceptIcon = styled(FontAwesomeIcon)`
+  color: rgba(49, 206, 74, 0.8);
+`;
+
 
 const Applications = () => {
     const [applications, setApplications] = useState([]);
@@ -91,12 +122,16 @@ const Applications = () => {
             <ul>
                 <h3>Applications</h3>
                 {applications.map(application => (
-                    <ProfileProjectsWrapper key={application.id}>
-                        <User>{application.user}</User>
-                        <button onClick={() => deleteApplication(application.id)}>Delete <FontAwesomeIcon icon={faTrashCan}/></button>
-                        <button onClick={() => confirmApplication(application.id)}>Accept <FontAwesomeIcon icon={faCheck}/></button>
-                        <Content>{application.content}</Content>
-                    </ProfileProjectsWrapper>
+                    <ApplicationWrapper key={application.id}>
+                        <div>
+                        <User>From: {application.user}</User>
+                        <textarea value={application.content} disabled rows="4"></textarea>
+                        </div>
+                        <div>
+                            <DeclineButton onClick={() => deleteApplication(application.id)}>Delete <DeclineIcon icon={faTrashCan}/></DeclineButton>
+                            <AcceptButton onClick={() => confirmApplication(application.id)}>Accept <AcceptIcon icon={faCheck}/></AcceptButton>
+                        </div>
+                    </ApplicationWrapper>
                 ))}
             </ul>
         </div>

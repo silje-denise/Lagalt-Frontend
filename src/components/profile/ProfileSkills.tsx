@@ -4,7 +4,6 @@ import keycloak from "../../keycloak";
 
 const SkillsWrapper = styled.div`
     background-color: #28113e;
-    width: 300px;
     height: 355px;
     padding-left: 50px;
     padding-top: 10px;

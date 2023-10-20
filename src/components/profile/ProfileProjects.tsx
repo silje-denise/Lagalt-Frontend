@@ -6,20 +6,16 @@ import ProjectList from "../projects/public/ProjectList.tsx";
 const ProfileProjectWrapper = styled.ul`
     border-radius: 20px;
     list-style: none;
-    position: relative;
-    bottom: 535px;
-    left: 400px;
-    width: 1000px;
-    //background-color: black;
+    width: 100%;
 
     h3{
         color: #e7daf5;
-    }
-
-    li{
-        line-height: 35px;
+        margin-left: 30px;
     }
 `;
+
+
+
 const Projects = () => {
 
     const [projects, setProjects] = useState<string[]>([]);
