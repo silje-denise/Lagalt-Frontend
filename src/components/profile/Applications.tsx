@@ -120,7 +120,7 @@ const Applications = () => {
     return (
         <div>
             <ul>
-                <h3>Applications</h3>
+                {applications && <h3>Applications</h3>}
                 {applications.map(application => (
                     <ApplicationWrapper key={application.id}>
                         <div>
