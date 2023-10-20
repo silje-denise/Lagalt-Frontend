@@ -32,7 +32,7 @@ In order to use this app as inteded, you are required to create environment vari
 To start the application, run `npm install`, and then `npm start` for a dev server. Navigate to `http://localhost:3000`. The application will automatically reload if you change any of the source files.
 
 ## Deployment
-The application is deployed to Vercel, check it out here.
+The application is deployed to Vercel, check it out [here](https://lagalt-frontend-plum.vercel.app/). We deployed the application via Github, and added the .env file to Vercel. In addition to this, we had to set the keycloak config to point on both localhost and the vercel link in order to be able to log in to our application.
 
 ## Security
-Our app uses OpenID connect/SSO for authentication. Our Keycloak service works on both localhost and on Vercel
+Our app uses OpenID connect/SSO for authentication. Our Keycloak service works on both localhost and on Vercel.
