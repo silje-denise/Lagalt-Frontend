@@ -45,16 +45,23 @@ const ProfileHeader = styled.h3`
   margin-left: 10px;
 `;
 
+// This is a functional React component that displays user information.
 const UserInfo = () => {
+
+  // Use React hooks to manage the state of user information and their profile picture URL.
   const [userInfo, setUserInfo] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
 
+  // Get the API URL from environment variables.
   const apiUrl = process.env.REACT_APP_API_URL;
   let username = "";
+  
+  // Check if keycloak's token has been parsed, then extract the preferred username from it.
   if (keycloak.tokenParsed) {
     username = `${keycloak.tokenParsed.preferred_username}`;
   }
 
+  // Send a GET request to the API to retrieve user data.
   useEffect(() => {
     fetch(`${apiUrl}/api/v1/Users/${username}`)
       .then((response) => {
@@ -64,12 +71,14 @@ const UserInfo = () => {
         return response.json();
       })
       .then((data) => {
+        // Update the component state with the fetched data.
         setUserInfo(data.info);
         setProfilePicture(data.imageUrl);
       })
       .catch((error) => console.error("Error fetching profile data: ", error));
   }, [apiUrl, profilePicture, userInfo, username]);
 
+  // Render the user information and profile picture.
   return (
     <ul>
       <ProfileHeader>Welcome back, {username}!</ProfileHeader>
