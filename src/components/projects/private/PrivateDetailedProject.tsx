@@ -276,14 +276,13 @@ const PrivateDetailedProject = ({
           </Wrapper>
         </TopSection>
         <section>
-          {neededSkills &&
-            neededSkills.map((skill: string) => {
-              return (
-                <Skills>
-                  <Skill>#{skill}</Skill>
-                </Skills>
-              );
-            })}
+          {neededSkills && (
+            <Skills>
+              {neededSkills.map((skill: string) => {
+                return <Skill>#{skill}</Skill>;
+              })}
+            </Skills>
+          )}
         </section>
       </StyledProjectListItem>
     </Container>
