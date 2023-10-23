@@ -61,11 +61,16 @@ const AcceptIcon = styled(FontAwesomeIcon)`
   color: rgba(49, 206, 74, 0.8);
 `;
 
+// This is a functional React component that manages and displays a users's applications.
 const Applications = () => {
+
   const [applications, setApplications] = useState([]);
+
+  // Retrieve the API URL from environment variables.
   const apiUrl = process.env.REACT_APP_API_URL;
   let username = "";
 
+  // If keycloak's token has been parsed, extract the preferred username from it.
   if (keycloak.tokenParsed) {
     username = `${keycloak.tokenParsed.preferred_username}`;
   }
@@ -74,11 +79,13 @@ const Applications = () => {
     fetch(`${apiUrl}/api/v1/Users/${username}`)
       .then((response) => response.json())
       .then((data) => {
+        // Update the applications state with the fetched data.
         setApplications(data.applications);
       })
       .catch((error) => console.error("Error fetching applications:", error));
   }, [apiUrl, username]);
 
+  // This function deletes a specific application when invoked.
   const deleteApplication = (id) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this application?"
@@ -98,9 +105,10 @@ const Applications = () => {
     }
   };
 
+  // This function confirms (or accepts) a specific application when invoked.
   const confirmApplication = (id: number) => {
     const confirmAccept = window.confirm(
-      "Are you sure you want to delete this application?"
+      "Are you sure you want to accept this application?"
     );
 
     if (confirmAccept) {
@@ -117,6 +125,7 @@ const Applications = () => {
     }
   };
 
+  // Render the list of applications along with Delete and Accept buttons for each.
   return (
     <div>
       <ul>
@@ -127,6 +136,7 @@ const Applications = () => {
               <>
                 <ApplicationWrapper key={application.id}>
                   <div>
+                    {application.title}
                     <User>From: {application.user}</User>
                     <textarea
                       value={application.content}

@@ -21,16 +21,20 @@ const SkillsWrapper = styled.div`
     margin-left: 20px;
   }
 `;
-
+// This is a functional React component that displays a user's skills.
 const ProfileSkills = () => {
   const [skills, setSkills] = useState<string[]>([]);
 
+  // Get the API URL from environment variables.
   const apiUrl = process.env.REACT_APP_API_URL;
   let username = "";
+
+  // Check if keycloak's token has been parsed, then extract the preferred username from it.
   if (keycloak.tokenParsed) {
     username = `${keycloak.tokenParsed.preferred_username}`;
   }
 
+  // Send a GET request to the API to retrieve user data.
   useEffect(() => {
     fetch(`${apiUrl}/api/v1/Users/${username}`)
       .then((response) => {
@@ -40,12 +44,13 @@ const ProfileSkills = () => {
         return response.json();
       })
       .then((data) => {
+        // Update the skills state with the fetched data.
         setSkills(data.skills);
-        console.log(data.skills);
       })
       .catch((error) => console.error("Error fetching profile data: ", error));
   }, [apiUrl, username]);
 
+  // Render the list of skills.
   return (
     <ul>
       <SkillsWrapper>
