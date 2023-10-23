@@ -122,7 +122,6 @@ const DetailedProject = ({
   collaborators,
   neededSkills,
 }) => {
-
   return (
     <Container>
       <StyledProjectListItem>
@@ -171,30 +170,33 @@ const DetailedProject = ({
               </Collaborator>
 
               {collaborators &&
-                collaborators.map((collaborator: {imageUrl: string, username: string}) => {
-                  return (
-                    <Collaborator>
-                      <Image
-                        src={collaborator.imageUrl}
-                        alt={`Picture of ${collaborator.username}`}
-                        onError={(e) =>
-                          (e.currentTarget.src =
-                            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png")
-                        }
-                      />
-                    </Collaborator>
-                  );
-                })}
+                collaborators.map(
+                  (collaborator: { imageUrl: string; username: string }) => {
+                    return (
+                      <Collaborator>
+                        <Image
+                          src={collaborator.imageUrl}
+                          alt={`Picture of ${collaborator.username}`}
+                          onError={(e) =>
+                            (e.currentTarget.src =
+                              "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/1280px-Placeholder_view_vector.svg.png")
+                          }
+                        />
+                      </Collaborator>
+                    );
+                  }
+                )}
             </Collaborators>
           </Wrapper>
         </TopSection>
         <section>
-          <Skills>
-            {neededSkills &&
-              neededSkills.map((skill: string) => {
+          {neededSkills.length > 0 && (
+            <Skills>
+              {neededSkills.map((skill: string) => {
                 return <Skill>#{skill}</Skill>;
               })}
-          </Skills>
+            </Skills>
+          )}
         </section>
       </StyledProjectListItem>
     </Container>

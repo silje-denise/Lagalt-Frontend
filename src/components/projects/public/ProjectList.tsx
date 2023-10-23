@@ -26,19 +26,26 @@ const StyledProjectList = styled.div`
 const ProjectList = (projects) => {
   return (
     <StyledProjectList>
-      {projects.projects.map((project:{title: string, shortDescription: string, id: number}) => {
-        if (project.title && project.shortDescription) {
-          return (
-            <ProjectListItem
-            key={project.id}
-              title={project.title}
-              shortDescription={project.shortDescription}
-              id={project.id}
-            />
-          );
-        }
-        return <></>;
-      })}
+      {projects &&
+        projects.projects.map(
+          (project: {
+            title: string;
+            shortDescription: string;
+            id: number;
+          }) => {
+            if (project.title && project.shortDescription) {
+              return (
+                <ProjectListItem
+                key={project.id}
+                  title={project.title}
+                  shortDescription={project.shortDescription}
+                  id={project.id}
+                />
+              );
+            }
+            return <></>;
+          }
+        )}
     </StyledProjectList>
   );
 };
