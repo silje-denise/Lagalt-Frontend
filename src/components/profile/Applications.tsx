@@ -132,7 +132,7 @@ const Applications = () => {
         {applications.length > 0 && <h3>Applications</h3>}
         {applications &&
           applications.map(
-            (application: { id: number; content: string; user: string }) => (
+            (application: { id: number; content: string; user: string, title: string }) => (
               <>
                 <ApplicationWrapper key={application.id}>
                   <div>
