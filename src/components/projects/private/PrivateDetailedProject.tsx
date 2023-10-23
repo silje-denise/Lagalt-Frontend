@@ -276,7 +276,7 @@ const PrivateDetailedProject = ({
           </Wrapper>
         </TopSection>
         <section>
-          {neededSkills && (
+          {neededSkills.length > 0 && (
             <Skills>
               {neededSkills.map((skill: string) => {
                 return <Skill>#{skill}</Skill>;
