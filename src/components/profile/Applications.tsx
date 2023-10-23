@@ -16,10 +16,6 @@ const ApplicationWrapper = styled.ul`
   height: auto;
   width: 77%;
 
-  h3 {
-    color: #111;
-  }
-
   textarea {
     color: black;
     background-color: #ddd;
@@ -61,7 +57,7 @@ const AcceptIcon = styled(FontAwesomeIcon)`
   color: rgba(49, 206, 74, 0.8);
 `;
 
-// This is a functional React component that manages and displays a users's applications.
+// This is a React component that manages and displays a users's applications.
 const Applications = () => {
 
   const [applications, setApplications] = useState([]);
@@ -85,7 +81,13 @@ const Applications = () => {
       .catch((error) => console.error("Error fetching applications:", error));
   }, [apiUrl, username]);
 
-  // This function deletes a specific application when invoked.
+/**
+ * Deletes an application based on its ID. 
+ * Asks the user for confirmation before proceeding with the deletion.
+ * On successful deletion, the page will be reloaded.
+ *
+ * @param {number} id - The ID of the application to be deleted.
+ */
   const deleteApplication = (id) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this application?"
@@ -132,11 +134,13 @@ const Applications = () => {
         {applications.length > 0 && <h3>Applications</h3>}
         {applications &&
           applications.map(
-            (application: { id: number; content: string; user: string, title: string }) => (
+            (application: { id: number; content: string; user: string; project: string }) => (
               <>
                 <ApplicationWrapper key={application.id}>
                   <div>
-                    {application.title}
+                    <h3>
+                        {application.project}
+                    </h3>
                     <User>From: {application.user}</User>
                     <textarea
                       value={application.content}

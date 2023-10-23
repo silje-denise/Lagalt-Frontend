@@ -36,6 +36,7 @@ const ProjectList = (projects) => {
             if (project.title && project.shortDescription) {
               return (
                 <ProjectListItem
+                key={project.id}
                   title={project.title}
                   shortDescription={project.shortDescription}
                   id={project.id}
