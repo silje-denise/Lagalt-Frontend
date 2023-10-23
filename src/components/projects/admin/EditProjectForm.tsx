@@ -100,10 +100,6 @@ const EditProjectForm = ({ isOpen, title, fullDescription, progress, id }) => {
         }
         return response.json();
       })
-      .then((data) => {
-        // Handle the data from the API if needed
-        console.log(data);
-      })
       .catch((error) => {
         // Handle errors here
         console.error("There was a problem with the fetch operation:", error);

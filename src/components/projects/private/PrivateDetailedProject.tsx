@@ -4,10 +4,11 @@ import {
   faCircleUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import ApplicationForm from "./ApplicationForm.tsx";
+import keycloak from "../../../keycloak.js";
 
 const Title = styled.div`
   font-weight: bold;
@@ -162,6 +163,28 @@ const PrivateDetailedProject = ({
   //Handle the dialog box for the application form
   const [isOpen, setIsOpen] = useState(false);
 
+  const [userIsCollaborator, setUserIsCollaborator] = useState(false);
+  let username = keycloak.tokenParsed!.preferred_username;
+
+  /**
+   * Effect to check if the current user is a collaborator.
+   * @function
+   * @name useEffect
+   * @param {function} callback - A callback function.
+   * @returns {void}
+   */
+  useEffect(() => {
+    collaborators &&
+      collaborators.map((collaborator) => {
+        if (collaborator.username === username) {
+          setUserIsCollaborator(true);
+          return <></>;
+        } else {
+          setUserIsCollaborator(false);
+          return <></>;
+        }
+      });
+  }, [collaborators, username]);
 
   const handleOnclick = () => {
     if (isOpen) {
@@ -244,21 +267,23 @@ const PrivateDetailedProject = ({
                 )}
             </Collaborators>
             {/* The users can only join a project if it is still not completed */}
-            {progress !== 3 && (
+            {progress !== 3 && !userIsCollaborator && (
               <>
                 <JoinButton onClick={handleOnclick}>Join our team</JoinButton>
-                <ApplicationForm isOpen={isOpen} id={id}/>
+                <ApplicationForm isOpen={isOpen} id={id} />
               </>
             )}
           </Wrapper>
         </TopSection>
         <section>
-          <Skills>
-            {neededSkills &&
-              neededSkills.map((skill: string) => {
-                return <Skill>#{skill}</Skill>;
-              })}
-          </Skills>
+          {neededSkills &&
+            neededSkills.map((skill: string) => {
+              return (
+                <Skills>
+                  <Skill>#{skill}</Skill>
+                </Skills>
+              );
+            })}
         </section>
       </StyledProjectListItem>
     </Container>

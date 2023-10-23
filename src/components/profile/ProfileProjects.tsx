@@ -28,7 +28,6 @@ const ProfileProjects = () => {
       .then((response) => response.json())
       .then((data) => {
         setProjects(data.projects);
-        console.log(data.projects);
       })
       .catch((error) => console.error("Error fetching projects", error));
   }, [apiUrl, username]);

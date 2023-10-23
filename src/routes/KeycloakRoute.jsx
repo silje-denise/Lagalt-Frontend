@@ -8,20 +8,12 @@ import keycloak from "../keycloak";
  * @returns {JSX.Element}
  */
 function KeycloakRoute({ children, role, redirectTo = "/" }) {
-
-  console.log(keycloak.authenticated)
-
   //Not logged inn go to this link
   if (!keycloak.authenticated) {
     return <Navigate replace to={redirectTo} />;
   }
 
-  //if (keycloak.hasRealmRole(role)) {
-    return <>{children}</>;
-  //}
-
-  //Logged in, but not authorized go to this link
- //return <Navigate replace to={"/authorized"} />;
+  return <>{children}</>;
 }
 
 export default KeycloakRoute;

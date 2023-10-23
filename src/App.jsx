@@ -11,7 +11,6 @@ import Footer from "./components/common/Footer.tsx";
 import TestPage from "./pages/TestPage.tsx";
 
 export default function App() {
-  console.log("App render");
   return (
     <BrowserRouter>
       <Navbar />

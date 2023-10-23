@@ -120,12 +120,11 @@ const Applications = () => {
   return (
     <div>
       <ul>
-      {applications.length > 0 && <h3>Applications</h3>}
+        {applications.length > 0 && <h3>Applications</h3>}
         {applications &&
           applications.map(
             (application: { id: number; content: string; user: string }) => (
               <>
-               
                 <ApplicationWrapper key={application.id}>
                   <div>
                     <User>From: {application.user}</User>
